@@ -9,8 +9,11 @@ html {
 body {
   /* Margin bottom by footer height */
   margin-bottom: 60px;
-  background-color: #ff80ff;
+  background-color: #ffe1ff;
   
+}
+nav{
+	 color: #ffe1ff;
 }
 
 footer {
@@ -18,7 +21,7 @@ footer {
   bottom: 0;
   width: 100%;
   height: 60px;
-  background-color: #ff00ff;
+  background-color: #ffe1ff;
   text-align:center;
   line-height:60px
 }

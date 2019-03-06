@@ -7,7 +7,7 @@
 				<span class="icon-bar"></span> <span class="icon-bar"></span> <span
 					class="icon-bar"></span>
 			</button>
-			<img src="img/student-48.png" alt="logo" />
+			<img src="/img/heart.png" alt="logo" />
 		</div>
 		<div class="collapse navbar-collapse" id="myNavbar">
 			<ul class="nav navbar-nav" sec:authorize="isAuthenticated()">
@@ -17,12 +17,12 @@
 						class="caret"></span>
 				</a>
 					<ul class="dropdown-menu">
-						<li sec:authorize="hasRole('ROLE_PROFESSOR')"><a
+						<li sec:authorize=""><a
 							href="/offer/add">Agregar Oferta</a></li>
 						<li><a href="/offer/list">Ver Oferta</a></li>
 					</ul></li>
 				<li id="users-menu" class="dropdown"
-					sec:authorize="hasRole('ROLE_ADMIN')"><a
+					sec:authorize=><a
 					class="dropdown-toggle" data-toggle="dropdown" href="#">
 						Gestión de Usuarios <span class="caret"></span>
 				</a>
@@ -39,12 +39,12 @@
 				</a>
 					<ul id="languageDropdownMenuButton" class="dropdown-menu">
 						<li><a id="btnEnglish" value="EN"> <img
-								th:src="@{/img/if_uk_flag.png}"
+								
 								style="border: 0; float: left; margin-right: 15px" /> <span
 								th:text="#{language.en}">Inglés</span>
 						</a></li>
 						<li><a id="btnSpanish" value="ES"> <img
-								th:src="@{/img/if_spain_flag.png}"
+								
 								style="border: 0; float: left; margin-right: 15px" /> <span
 								th:text="#{language.es}">Español</span>
 						</a></li>
