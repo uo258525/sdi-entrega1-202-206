@@ -13,8 +13,14 @@ body {
   
 }
 nav{
-	 color: #ffe1ff;
+	 background-color: #ffe1ff;
 }
+btn-default {
+    color: #333;
+    background-color: #ccacd5;
+    border-color: #ffffff;
+}
+
 
 footer {
   position: absolute;
