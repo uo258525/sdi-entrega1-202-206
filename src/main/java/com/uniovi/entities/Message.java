@@ -1,7 +1,5 @@
 package com.uniovi.entities;
 
-
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,34 +10,31 @@ import org.joda.time.LocalDateTime;
 
 @Entity
 public class Message {
-	
+
 	@Id
-	@GeneratedValue (strategy=GenerationType.IDENTITY)
-	
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+
 	private long id;
-	
+
 	private String content;
-	
-	private boolean valid;//podemos "borrar" mensajes. marcarlos como no válidos
-	
+
+	private boolean valid;// podemos "borrar" mensajes. marcarlos como no válidos
+
 	@ManyToOne
-	private Offer offer;	
-	@ManyToOne	
-	private User sender;	
+	private Offer offer;
 	@ManyToOne
-	private User receiver;	
-	private LocalDateTime date; //message date
-	
+	private User sender;
+	@ManyToOne
+	private User receiver;
+	private LocalDateTime date; // message date
+
 	public Message() {
-		
-	}	
-	
+
+	}
 
 	public long getId() {
 		return id;
 	}
-
-
 
 	public String getContent() {
 		return content;
@@ -88,7 +83,5 @@ public class Message {
 	public void setDate(LocalDateTime date) {
 		this.date = date;
 	}
-	
-	
 
 }

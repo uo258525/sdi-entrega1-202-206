@@ -19,22 +19,22 @@ public class SignUpFormValidator implements Validator {
 	@Override
 	public void validate(Object target, Errors errors) {
 		User user = (User) target;
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "dni", "Error.empty");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "Error.empty");
 	
 		if (usersService.getUserByEmail(user.getEmail()) != null) {
-			errors.rejectValue("dni", "Error.signup.email.duplicate");
+			errors.rejectValue("emal", "Error.signup.email.duplicate");
 		}
 		if (user.getName().length() < 5 || user.getName().length() > 24) {
 			errors.rejectValue("name", "Error.signup.name.length");
 		}
 		if (user.getSurname().length() < 5 || user.getSurname().length() > 24) {
-			errors.rejectValue("lastName", "Error.signup.lastName.length");
+			errors.rejectValue("surname", "Error.signup.surname.length");
 		}
 		if (user.getPassword().length() < 5 || user.getPassword().length() > 24) {
 			errors.rejectValue("password", "Error.signup.password.length");
 		}
 		if (!user.getPassword2().equals(user.getPassword())) {
-			errors.rejectValue("passwordConfirm", "Error.signup.passwordConfirm.coincidence");
+			errors.rejectValue("password2", "Error.signup.password2.coincidence");
 		}
 	}
 }

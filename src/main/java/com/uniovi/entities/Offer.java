@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,27 +20,26 @@ import com.uniovi.entities.type.SaleStatus;
 public class Offer {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	
 	private long id;
-	private String title;//object name	
-	private String details; //details of the object
-	private String description;//description of the object
-	private LocalDateTime date; //date of objet upload
+	private String title;// object name
+	private String details; // details of the object
+	private String description;// description of the object
+	private LocalDateTime date; // date of objet upload
 	private double price;
-	
-	@Enumerated
-	private SaleStatus status; //offer status->possibility for the user to active and deactive an offer
-	
+
+	@Enumerated(EnumType.STRING)
+	private SaleStatus status; // offer status->possibility for the user to active and deactive an offer
+
 	@ManyToOne
 	private User owner;
 	@ManyToOne
 	private User buyer;
-	
-	@OneToMany(mappedBy="offer")
-	private Set<Message> messages=new HashSet<>();
-	
+
+	@OneToMany(mappedBy = "offer")
+	private Set<Message> messages = new HashSet<>();
+
 	public Offer() {
-		
+
 	}
 
 	public long getId() {
@@ -134,12 +134,9 @@ public class Offer {
 
 	@Override
 	public String toString() {
-		return "Offer [id=" + id + ", title=" + title + ", details=" + details
-				+ ", description=" + description + ", date=" + date + ", price="
-				+ price + ", status=" + status + ", owner=" + owner + ", buyer="
-				+ buyer + "]";
+		return "Offer [id=" + id + ", title=" + title + ", details=" + details + ", description=" + description
+				+ ", date=" + date + ", price=" + price + ", status=" + status + ", owner=" + owner + ", buyer=" + buyer
+				+ "]";
 	}
-	
-	
-	
+
 }
