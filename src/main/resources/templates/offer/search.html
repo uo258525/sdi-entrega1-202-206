@@ -30,11 +30,13 @@
 				<ul class="nav navbar-nav">
 					<li class="active"><a href="/offer/list">Ver Ofertas</a></li>
 					<li><a href="/offer/add">Agregar Oferta</a></li>
-					<li><a href="/offer/search">Buscar Oferta</a></li>
+					<li><a href="/offer/search">Buscar</a></li>
+
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<li><a href="/signup"><span
 							class="glyphicon glyphicon-user"></span> Registrate</a></li>
+					
 					<li sec:authorize="isAuthenticated()"><a href="/logout"> <span
 							class="glyphicon glyphicon-log-out"></span> Desconectar
 					</a></li>
@@ -46,6 +48,13 @@
 
 
 	<div class="container">
+		<form class="navbar-form" action="/offer/search/filter">
+			<div class="form-group">
+				<input name="searchText" type="text" class="form-control" size="50"
+					placeholder="Buscar por descripción o nombre del alumno">
+			</div>
+			<button type="submit" class="btn btn-default">Buscar</button>
+		</form>
 		<h2>Ofertas</h2>
 		<p>Las ofertas disponibles en wallapop:</p>
 		<button type="button" id="updateButton" class="btn btn-default">Actualizar</button>

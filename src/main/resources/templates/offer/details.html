@@ -27,11 +27,11 @@
       <ul class="nav navbar-nav">
         <li class="active"><a href="/offer/list">Ver Ofertas</a></li>
 		<li><a href="/offer/add">Agregar Oferta</a></li>
-        <li><a href="/offer/filter">Filtrar</a></li>
+         <li><a href="/offer/search">Buscar Oferta</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-	    <li><a href="/registrarse"><span class="glyphicon glyphicon-user"></span> Registrate</a></li>
-        <li><a href="/identificarse"><span class="glyphicon glyphicon-log-in"></span> Identifícate</a></li>
+	    <li><a href="/signup"><span class="glyphicon glyphicon-user"></span> Registrate</a></li>
+        <li><a href="/logout"><span class="glyphicon glyphicon-log-in"></span> Salir</a></li>
       </ul>
     </div>
   </div>
@@ -65,11 +65,17 @@
 		</div>
 	</div>
 	<div class="container">
-		<h2>Detalles de la nota</h2>
+		<h2>Detalles de la oferta</h2>
 		<div class="panel panel-default">
 			<div class="panel-heading">email</div>
 			<div class="panel-body" th:text="${offer.owner.email}">aaaa@uniovi.es</div>
 		</div>
-		<div class="panel panel-default">
+		
+		<button type="button" id="buyButton" class="btn btn-default">Comprar</button>
+		<script>
+			$("#buyButton").click(function() {
+				$("#tableoffers").load('/offer/list/buy');
+			});
+		</script>
 </body>
 </html>
