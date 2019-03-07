@@ -24,7 +24,6 @@ import com.uniovi.services.UserService;
 
 @Controller
 public class OffersController {
-	
 
 	@Autowired
 	private HttpSession httpSession;
@@ -37,7 +36,7 @@ public class OffersController {
 
 	@RequestMapping("/offer/list")
 	public String getList(Model model, Pageable pageable, Principal principal,
-			@RequestParam(value = "", required=false) String searchText) {
+			@RequestParam(value = "", required = false) String searchText) {
 		/*
 		 * String email = principal.getName(); // DNI es el name de la autenticación
 		 * User user = usersService.getUserByEmail(email); Page<Offer> offers = new
@@ -48,7 +47,7 @@ public class OffersController {
 		 * searchText,user); }else { offers = offersService.getOffersForUser(pageable,
 		 * user); } model.addAttribute("offerList", offers.getContent());
 		 * model.addAttribute("page", offers); // Busca en templates/fragments/offer
-		 */		return "offer/list";
+		 */ return "offer/list";
 	}
 
 	@RequestMapping(value = "/offer/add", method = RequestMethod.POST)
@@ -59,7 +58,7 @@ public class OffersController {
 
 	@RequestMapping(value = "/offer/add")
 	public String getoffer(Model model) {
-		//model.addAttribute("usersList", usersService.getUsers());
+		// model.addAttribute("usersList", usersService.getUsers());
 		return "offer/add";
 	}
 
@@ -75,24 +74,23 @@ public class OffersController {
 		return "redirect:/offer/list";
 	}
 
-	@RequestMapping(value = "/offer/edit/{id}")
-	public String getEdit(Model model, @PathVariable Long id) {
-		model.addAttribute("offer", offersService.getOffer(id));
-		model.addAttribute("usersList", usersService.getUsers());
-		return "offer/edit";
-	}
-
-	@RequestMapping(value = "/offer/edit/{id}", method = RequestMethod.POST)
-	public String setEdit(Model model, @PathVariable Long id, @ModelAttribute Offer offer) {
-		/*
-		 * Offer original = offersService.getOffer(id); // modificar solo score y
-		 * description original.setDate(offer.getDate());
-		 * original.setDescription(offer.getDescription());
-		 * offersService.addOffer(original);
-		 */
-		return "redirect:/offer/details/" + id;
-	}
-
+	/*
+	 * @RequestMapping(value = "/offer/edit/{id}") public String getEdit(Model
+	 * model, @PathVariable Long id) { model.addAttribute("offer",
+	 * offersService.getOffer(id)); model.addAttribute("usersList",
+	 * usersService.getUsers()); return "offer/edit"; }
+	 * 
+	 * @RequestMapping(value = "/offer/edit/{id}", method = RequestMethod.POST)
+	 * public String setEdit(Model model, @PathVariable Long id, @ModelAttribute
+	 * Offer offer) {
+	 * 
+	 * Offer original = offersService.getOffer(id); // modificar solo score y
+	 * description original.setDate(offer.getDate());
+	 * original.setDescription(offer.getDescription());
+	 * offersService.addOffer(original);
+	 * 
+	 * return "redirect:/offer/details/" + id; }
+	 */
 	/*
 	 * @RequestMapping("/offer/list/update") public String updateList(Model model,
 	 * Pageable pageable, Principal principal) { String dni = principal.getName();
@@ -103,12 +101,5 @@ public class OffersController {
 	 * model.addAttribute("offerList", offers.getContent()); return
 	 * "offer/list :: tableoffers"; }
 	 */
-
-	
-		
-		
-
-
-	
 
 }
