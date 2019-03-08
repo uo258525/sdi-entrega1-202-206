@@ -45,42 +45,30 @@
 
 
 
-	<div class="container">
-		<h2>Ofertas</h2>
-		<p>Las ofertas disponibles en wallapop:</p>
-		<button type="button" id="updateButton" class="btn btn-default">Actualizar</button>
-		<script>
-			$("#updateButton").click(function() {
-				$("#tableoffers").load('/offer/list/update');
-			});
-		</script>
-		<div class="table-responsive">
-			<table class="table table-hover" th:fragment="tableoffers"
-				id="tableoffers">
-				<thead>
-					<tr>
-						<th class="col-md-1">id</th>
-						<th>Descripción</th>
-						<th>Precio</th>
-						<th class="col-md-1"></th>
-						<th class="col-md-1"></th>
-						<th class="col-md-1"></th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="offer : ${offerList}">
-						<td th:text="${offer.id}">1</td>
-						<td th:text="${offer.description}">Funda de movil</td>
-						<td th:text="${offer.precio}">10</td>
-						<td><a th:href="${'/offer/details/' + offer.id}">detalles</a></td>
-						<td><a th:href="${'/offer/edit/' + offer.id}">modificar</a></td>
-						<td><a th:href="${'/offer/delete/' + offer.id}">eliminar</a></td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-	</div>
 
+
+
+	<div class="container">
+		<h2>Detalles del usuario</h2>
+		<div class="panel panel-default">
+			<div class="panel-heading">Titulo</div>
+			<div class="panel-body" th:text="${user.email}">test@uniovi.es</div>
+		</div>
+		<div class="panel panel-default">
+			<div class="panel-heading">Precio</div>
+			<div class="panel-body" th:text="${user.moneyAccount}">100</div>
+		</div>
+		<div class="panel panel-default">
+			<div class="panel-heading">Nombre</div>
+			<div class="panel-body" th:text="${user.name}">Juan</div>
+		</div>
+		<div class="panel panel-default">
+			<div class="panel-heading">Apellidos</div>
+			<div class="panel-body" th:text="${user.surname}">Juanez
+				Juanson</div>
+		</div>
+
+	</div>
 
 </body>
 </html>

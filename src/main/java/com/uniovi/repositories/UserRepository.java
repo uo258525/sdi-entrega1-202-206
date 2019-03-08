@@ -4,11 +4,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.uniovi.entities.User;
 
-public interface UserRepository  extends JpaRepository<User, Long>{
-	
-	User findByEmail (String email);
-	User findByid (String id);
-	User save (User user);
-	
+public interface UserRepository extends JpaRepository<User, Long> {
+
+	User findByEmail(String email);
 
 }
