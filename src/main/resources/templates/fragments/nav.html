@@ -17,12 +17,12 @@
 						class="caret"></span>
 				</a>
 					<ul class="dropdown-menu">
-						<li sec:authorize=""><a
+						<li sec:authorize="isAuthenticated()&& hasRole('ROLE_ADMIN')"><a
 							href="/offer/add">Agregar Oferta</a></li>
 						<li><a href="/offer/list">Ver Oferta</a></li>
 					</ul></li>
 				<li id="users-menu" class="dropdown"
-					sec:authorize=><a
+					sec:authorize="isAuthenticated()&& hasRole('ROLE_ADMIN')"><a
 					class="dropdown-toggle" data-toggle="dropdown" href="#">
 						Gestión de Usuarios <span class="caret"></span>
 				</a>

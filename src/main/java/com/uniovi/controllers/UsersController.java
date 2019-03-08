@@ -1,6 +1,9 @@
 package com.uniovi.controllers;
 
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -9,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.uniovi.entities.User;
 import com.uniovi.services.SecurityService;
@@ -56,5 +60,21 @@ public class UsersController {
 		User activeUser = usersService.getUserByEmail(email);
 		
 		return "home";
+	}
+	
+	@RequestMapping("/user/list")
+	public String getList(Model model, Pageable pageable, Principal principal,
+			@RequestParam(value = "", required = false) String searchText) {
+		
+		  String email = principal.getName(); // DNI es el name de la autenticación
+		  User user = usersService.getUserByEmail(email); Page<User> offers = new
+		  PageImpl<User>(new LinkedList<User>());
+		  
+		  if (searchText != null && !searchText.isEmpty()) { offers =
+		  usersService.se(pageable,
+		  searchText,user); }else { offers = usersService.getOffersForUser(pageable,
+		  user); } model.addAttribute("offerList", offers.getContent());
+		  model.addAttribute("page", offers); // Busca en templates/fragments/offer
+		  return "offer/list";
 	}
 }
