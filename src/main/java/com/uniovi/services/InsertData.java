@@ -22,6 +22,22 @@ public class InsertData {
 		 user.setPassword("admin");
 		 user.setPassword2("admin");
 		 userService.addUser(user);
+		 user = new User();
+		 user.setRol(Rol.ROLE_USER);
+		 user.setEmail("user1");
+		 user.setPassword("user1");
+		 user.setPassword2("user1");
+		 user.setName("Juan");
+		 user.setSurname("Diaz");
+		 userService.addUser(user);
+		 user = new User();
+		 user.setRol(Rol.ROLE_USER);
+		 user.setEmail("user2");
+		 user.setPassword("user2");
+		 user.setPassword2("user2");
+		 user.setName("Lucia");
+		 user.setSurname("Fernandez");
+		 userService.addUser(user);
 		 
 	}
 

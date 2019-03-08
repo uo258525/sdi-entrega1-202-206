@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,13 +24,13 @@ import com.uniovi.validators.SignUpFormValidator;
 public class UsersController {
 	@Autowired
 	private UserService usersService;
-	
+
 	@Autowired
 	private SignUpFormValidator signUpFormValidator;
-	
+
 	@Autowired
 	private SecurityService securityService;
-	
+
 	@RequestMapping(value = "/signup", method = RequestMethod.GET)
 	public String signup(Model model) {
 		model.addAttribute("user", new User());
@@ -42,7 +43,7 @@ public class UsersController {
 		if (result.hasErrors()) {
 			return "signup";
 		}
-		
+
 		usersService.addUser(user);
 		securityService.autoLogin(user.getEmail(), user.getPassword2());
 		return "redirect:home";
@@ -58,23 +59,14 @@ public class UsersController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();
 		User activeUser = usersService.getUserByEmail(email);
-		
+
 		return "home";
 	}
-	
-	@RequestMapping("/user/list")
-	public String getList(Model model, Pageable pageable, Principal principal,
-			@RequestParam(value = "", required = false) String searchText) {
-		
-		  String email = principal.getName(); // DNI es el name de la autenticación
-		  User user = usersService.getUserByEmail(email); Page<User> offers = new
-		  PageImpl<User>(new LinkedList<User>());
-		  
-		  if (searchText != null && !searchText.isEmpty()) { offers =
-		  usersService.se(pageable,
-		  searchText,user); }else { offers = usersService.getOffersForUser(pageable,
-		  user); } model.addAttribute("offerList", offers.getContent());
-		  model.addAttribute("page", offers); // Busca en templates/fragments/offer
-		  return "offer/list";
+
+	@GetMapping("/user/list")
+	public String getList(Model model) {
+		model.addAttribute("usersList", usersService.getUsers());
+		return "users/list";
 	}
+
 }

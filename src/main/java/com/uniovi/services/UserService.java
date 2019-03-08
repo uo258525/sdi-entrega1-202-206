@@ -1,6 +1,5 @@
 package com.uniovi.services;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,15 +18,13 @@ public class UserService {
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	public List<User> getUsers() {
-		List<User> users = new ArrayList<User>();
-		usersRepository.findAll().forEach(users::add);
-		return users;
+		return usersRepository.findAll();
 	}
 
-	public User getUser(Long email) {
-		return usersRepository.findById(email).get();
+	public User getUser(Long id) {
+		return usersRepository.findById(id).get();
 	}
- 
+
 	public User getUserByEmail(String email) {
 		return usersRepository.findByEmail(email);
 	}
@@ -36,9 +33,5 @@ public class UserService {
 		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 
 		usersRepository.save(user);
-	}
-
-	public void deleteUser(Long id) {
-		usersRepository.deleteById(id);
 	}
 }

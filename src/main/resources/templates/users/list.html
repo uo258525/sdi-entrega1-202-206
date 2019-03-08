@@ -1,4 +1,4 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <title>myWallapop</title>
@@ -14,35 +14,7 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-
-	<!-- Barra de Navegación superior -->
-	<nav class="navbar navbar-inverse">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse"
-					data-target="#myNavbar">
-					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
-						class="icon-bar"></span>
-				</button>
-				<img src="/img/heart.png" alt="logo" />
-			</div>
-			<div class="collapse navbar-collapse" id="myNavbar">
-				<ul class="nav navbar-nav">
-					<li class="active"><a href="/offer/list">Ver usuarios</a></li>
-					<li><a href="/offer/add">Agregar usuario</a></li>
-					<li><a href="/offer/search">Buscar usuario</a></li>
-				</ul>
-				<ul class="nav navbar-nav navbar-right">
-					<li><a href="/signup"><span
-							class="glyphicon glyphicon-user"></span> Registrate</a></li>
-					
-					<li sec:authorize="isAuthenticated()"><a href="/logout"> <span
-							class="glyphicon glyphicon-log-out"></span> Desconectar
-					</a></li>
-				</ul>
-			</div>
-		</div>
-	</nav>
+	<nav th:replace="fragments/nav" />
 	<div class="container">
 		<h2>Usuarios</h2>
 		<p>Los usuarios que actualmente figuran en el sistema son los
@@ -57,35 +29,21 @@
 						<th class="col-md-1"></th>
 						<th class="col-md-1"></th>
 						<th class="col-md-1"></th>
-						</tr>
+					</tr>
 				</thead>
 				<tbody>
 					<tr th:each="user : ${usersList}">
 						<td th:text="${user.email}">test@uniovi.es</td>
 						<td th:text="${user.name}">Nombre del usuario</td>
 						<td th:text="${user.surname}">Apellidos del usuario</td>
-
 						<td><a th:href="${'/user/details/' + user.id}">detalles</a></td>
 						<td><a th:href="${'/user/delete/' + user.id}">eliminar</a></td>
-						<input type="checkbox" name="user.name" value="user.email">
-						
-						
-				
-
 					</tr>
 				</tbody>
-				<input type="submit" value="Submit">
-				
-		<script>
-			$("#updateButton").click(function() {
-				$("#tableoffers").load('/user/list/delete');
-			});
-		</script>
 			</table>
 		</div>
 
 	</div>
 	<footer th:replace="fragments/footer" />
-
 </body>
 </html>
