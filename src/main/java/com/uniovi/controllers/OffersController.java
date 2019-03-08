@@ -65,6 +65,22 @@ public class OffersController {
 		 * model.addAttribute("page", offers); // Busca en templates/fragments/offer
 		 */		return "offer/search";
 	}
+	
+	@RequestMapping("/offer/search")
+	public String getSearch(Model model, Pageable pageable, Principal principal,
+			@RequestParam(value = "", required=false) String searchText) {
+		/*
+		 * String email = principal.getName(); // DNI es el name de la autenticación
+		 * User user = usersService.getUserByEmail(email); Page<Offer> offers = new
+		 * PageImpl<Offer>(new LinkedList<Offer>());
+		 * 
+		 * if (searchText != null && !searchText.isEmpty()) { offers =
+		 * offersService.searchOffersByDescriptionAndNameForUser(pageable,
+		 * searchText,user); }else { offers = offersService.getOffersForUser(pageable,
+		 * user); } model.addAttribute("offerList", offers.getContent());
+		 * model.addAttribute("page", offers); // Busca en templates/fragments/offer
+		 */		return "offer/search";
+	}
 
 	@RequestMapping(value = "/offer/add", method = RequestMethod.POST)
 	public String setoffer(@ModelAttribute Offer offer) {
