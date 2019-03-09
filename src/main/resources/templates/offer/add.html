@@ -1,93 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<title>myWallapop</title>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
-<link rel="stylesheet" href="/css/wallapop.css" />
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-</head>
+<head th:replace="fragments/head" />
 <body>
-
-	<!-- Barra de Navegación superior -->
-	<nav class="navbar navbar-inverse">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse"
-					data-target="#myNavbar">
-					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
-						class="icon-bar"></span>
-				</button>
-				<img src="/img/heart.png" alt="logo" />
-			</div>
-			<div class="collapse navbar-collapse" id="myNavbar">
-				<ul class="nav navbar-nav">
-					<li class="active"><a href="/offer/list">Ver Ofertas</a></li>
-					<li><a href="/offer/add">Agregar Oferta</a></li>
-					<li><a href="/offer/search">Buscar Oferta</a></li>
-				</ul>
-				<ul class="nav navbar-nav navbar-right">
-					<li><a href="/registrarse"><span
-							class="glyphicon glyphicon-user"></span> Registrate</a></li>
-					<li sec:authorize="isAuthenticated()"><a href="/logout">
-							<span class="glyphicon glyphicon-log-out"></span> Desconectar
-					</a></li>
-				</ul>
-			</div>
-		</div>
-	</nav>
-
-
+	<nav th:replace="fragments/nav" />
 	<div class="container">
 		<h2>Agregar Oferta</h2>
 		<form class="form-horizontal" method="post" action="/offer/add">
 			<div class="form-group">
-				<label class="control-label col-sm-2" for="description">Titulo:</label>
+				<label class="control-label col-sm-2" for="title">Titulo:</label>
 				<div class="col-sm-10">
-					<input type="text" class="form-control" name="description"
-						placeholder="funda iphone5" required="true" />
+					<input type="text" class="form-control" name="title"
+						placeholder="funda iphone5" required="true" id="title" />
 				</div>
 			</div>
-
 			<div class="form-group">
 				<label class="control-label col-sm-2" for="description">Descripcion:</label>
 				<div class="col-sm-10">
 					<input type="text" class="form-control" name="description"
-						placeholder="Describa la oferta" required="true" />
+						placeholder="Describa la oferta" required="true" id="description" />
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="control-label col-sm-2" for="description">Detalles:</label>
+				<label class="control-label col-sm-2" for="price">Precio:</label>
 				<div class="col-sm-10">
-					<input type="text" class="form-control" name="description"
-						placeholder="Detalles especificos ej:peso,tamaño,color"
-						required="true" />
+					<input type="number" step="0.01" class="form-control" name="price"
+						placeholder="Entre 0 y 1000" required="true" min="0"/>
 				</div>
 			</div>
-			<div class="form-group">
-				<label class="control-label col-sm-2" for="pwd">Precio:</label>
-				<div class="col-sm-10">
-					<input type="number" class="form-control" name="score"
-						placeholder="Enetre 0 y 1000" required="true" />
-				</div>
-			</div>
-
-
 			<div class="form-group">
 				<div class="col-sm-offset-2 col-sm-10">
 					<button type="submit" class="btn btn-primary">Enviar</button>
 				</div>
 			</div>
 		</form>
-
-
 	</div>
-
 </body>
 </html>
