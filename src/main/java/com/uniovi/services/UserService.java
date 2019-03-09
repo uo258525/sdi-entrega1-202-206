@@ -7,6 +7,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.uniovi.entities.User;
+import com.uniovi.entities.type.Rol;
 import com.uniovi.repositories.UserRepository;
 
 @Service
@@ -20,6 +21,10 @@ public class UserService {
 	public List<User> getUsers() {
 		return usersRepository.findAll();
 	}
+	
+	public List<User> getUsersStandardActive(){
+		return usersRepository.findByActiveAndRol(true,Rol.ROLE_USER );
+	}
 
 	public User getUser(Long id) {
 		return usersRepository.findById(id).get();
@@ -32,6 +37,12 @@ public class UserService {
 	public void addUser(User user) {
 		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 
+		usersRepository.save(user);
+	}
+
+	public void deleteUser(Long id) {
+		User user = usersRepository.getOne(id);
+		user.setActive(false);
 		usersRepository.save(user);
 	}
 }

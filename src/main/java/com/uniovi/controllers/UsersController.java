@@ -1,6 +1,7 @@
 package com.uniovi.controllers;
 
 import java.security.Principal;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -11,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -65,8 +67,16 @@ public class UsersController {
 
 	@GetMapping("/user/list")
 	public String getList(Model model) {
-		model.addAttribute("usersList", usersService.getUsers());
+		model.addAttribute("usersList", usersService.getUsersStandardActive());
 		return "users/list";
+	}
+
+	@PostMapping("/user/delete")
+	public String deleteUsers(@RequestParam List<Long> idsUser) {
+		for (Long long1 : idsUser) {
+			usersService.deleteUser(long1);
+		}
+		return "redirect:/user/list?success";
 	}
 
 }
