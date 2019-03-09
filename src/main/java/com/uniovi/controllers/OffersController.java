@@ -37,39 +37,46 @@ public class OffersController {
 	@RequestMapping("/offer/list")
 	public String getList(Model model, Pageable pageable, Principal principal,
 			@RequestParam(value = "", required = false) String searchText) {
-		
-		  String email = principal.getName(); // DNI es el name de la autenticación
-		  User user = usersService.getUserByEmail(email); Page<Offer> offers = new
-		  PageImpl<Offer>(new LinkedList<Offer>());
-		  
-		  if (searchText != null && !searchText.isEmpty()) { offers =
-		  offersService.searchOffersByDescriptionAndNameForUser(pageable,
-		  searchText,user); }else { offers = offersService.getOffersForUser(pageable,
-		  user); } model.addAttribute("offerList", offers.getContent());
-		  model.addAttribute("page", offers); // Busca en templates/fragments/offer
-		  return "offer/list";
+
+		String email = principal.getName(); // DNI es el name de la
+											// autenticación
+		User user = usersService.getUserByEmail(email);
+		Page<Offer> offers = new PageImpl<Offer>(new LinkedList<Offer>());
+
+		if (searchText != null && !searchText.isEmpty()) {
+			offers = offersService.searchOffersByDescriptionAndNameForUser(
+					pageable, searchText, user);
+		} else {
+			offers = offersService.getOffersForUser(pageable, user);
+		}
+		model.addAttribute("offerList", offers.getContent());
+		model.addAttribute("page", offers); // Busca en
+											// templates/fragments/offer
+		return "offer/list";
 	}
-	
+
 	@RequestMapping("/offer/search")
 	public String getSearch(Model model, Pageable pageable, Principal principal,
-			@RequestParam(value = "", required=false) String searchText) {
+			@RequestParam(value = "", required = false) String searchText) {
 		/*
-		 * String email = principal.getName(); // DNI es el name de la autenticación
-		 * User user = usersService.getUserByEmail(email); Page<Offer> offers = new
-		 * PageImpl<Offer>(new LinkedList<Offer>());
+		 * String email = principal.getName(); // DNI es el name de la
+		 * autenticación User user = usersService.getUserByEmail(email);
+		 * Page<Offer> offers = new PageImpl<Offer>(new LinkedList<Offer>());
 		 * 
 		 * if (searchText != null && !searchText.isEmpty()) { offers =
 		 * offersService.searchOffersByDescriptionAndNameForUser(pageable,
-		 * searchText,user); }else { offers = offersService.getOffersForUser(pageable,
-		 * user); } model.addAttribute("offerList", offers.getContent());
-		 * model.addAttribute("page", offers); // Busca en templates/fragments/offer
-		 */		return "offer/search";
+		 * searchText,user); }else { offers =
+		 * offersService.getOffersForUser(pageable, user); }
+		 * model.addAttribute("offerList", offers.getContent());
+		 * model.addAttribute("page", offers); // Busca en
+		 * templates/fragments/offer
+		 */ return "offer/search";
 	}
 
-
 	@RequestMapping(value = "/offer/add", method = RequestMethod.POST)
-	public String setoffer(@ModelAttribute Offer offer) {
-		offersService.addOffer(offer);
+	public String setoffer(@ModelAttribute Offer offer, Principal principal) {
+		User user = usersService.getUserByEmail(principal.getName());
+		offersService.addOffer(offer, user);
 		return "redirect:/offer/list";
 	}
 
@@ -108,16 +115,17 @@ public class OffersController {
 	 * 
 	 * return "redirect:/offer/details/" + id; }
 	 */
-	
-	  @RequestMapping("/offer/list/update") public String updateList(Model model,
-	  Pageable pageable, Principal principal)
-	   { String dni = principal.getName();
-	  // DNI es el name de la autenticación 
-	   User user =usersService.getUserByEmail(dni);
-	  
-	  Page<Offer> offers = offersService.getOffersForUser(pageable, user);
-	  model.addAttribute("offerList", offers.getContent());
-	   return "offer/list :: tableoffers"; }
-	 
+
+	@RequestMapping("/offer/list/update")
+	public String updateList(Model model, Pageable pageable,
+			Principal principal) {
+		String dni = principal.getName();
+		// DNI es el name de la autenticación
+		User user = usersService.getUserByEmail(dni);
+
+		Page<Offer> offers = offersService.getOffersForUser(pageable, user);
+		model.addAttribute("offerList", offers.getContent());
+		return "offer/list :: tableoffers";
+	}
 
 }

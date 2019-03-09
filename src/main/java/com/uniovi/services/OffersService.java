@@ -5,16 +5,16 @@ import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
+import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.uniovi.entities.Offer;
 import com.uniovi.entities.User;
+import com.uniovi.entities.type.SaleStatus;
 import com.uniovi.repositories.OfferRepository;
 
 @Service
@@ -38,7 +38,7 @@ public class OffersService {
 	}
 
 	public Offer getOffer(Long id) {
-		Set<Offer> consultedList = (Set<Offer>) httpSession.getAttribute("consultedList");
+		Set<Offer> consultedList = (Set<Offer>)httpSession.getAttribute("consultedList");
 		if (consultedList == null) {
 			consultedList = new HashSet<Offer>();
 		}
@@ -48,8 +48,10 @@ public class OffersService {
 		return offerObtained;
 	}
 
-	public void addOffer(Offer offer) {
-		// Si en Id es null le asignamos el ultimo + 1 de la lista
+	public void addOffer(Offer offer, User user) {
+		offer.setOwner(user);
+		offer.setStatus(SaleStatus.AVAILABLE);
+		offer.setDate(new LocalDateTime());
 		offersRepository.save(offer);
 	}
 
@@ -63,8 +65,7 @@ public class OffersService {
 		Page<Offer> offers = new PageImpl<Offer>(new LinkedList<Offer>());
 		searchText = "%" + searchText + "%";
 		
-		offers = offersRepository.searchByDescriptionAndName(pageable, searchText);
-		
+		offers = offersRepository.searchByDescriptionAndName(pageable, searchText);		
 		
 		return offers;
 	}

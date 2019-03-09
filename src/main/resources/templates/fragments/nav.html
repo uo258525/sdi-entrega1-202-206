@@ -18,11 +18,13 @@
 						class="caret"></span>
 				</a>
 					<ul class="dropdown-menu">
-						<li sec:authorize="isAuthenticated()&& hasRole('ROLE_ADMIN')"><a
+
+						<li sec:authorize="isAuthenticated()&& hasRole('ROLE_USER')"><a
 							href="/offer/add"
 							th:text="#{offeradd.message}">Agregar Oferta</a></li>
 						<li><a href="/offer/list"
 						th:text="#{offersee.message}">Ver Oferta</a></li>
+
 					</ul></li>
 				<li id="users-menu" class="dropdown"
 					sec:authorize="isAuthenticated()&& hasRole('ROLE_ADMIN')"><a
