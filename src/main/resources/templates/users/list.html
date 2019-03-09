@@ -8,6 +8,7 @@
 		<p>Los usuarios que actualmente figuran en el sistema son los
 			siguientes:</p>
 		<div class="table-responsive">
+		 <form method="post" action="/user/delete">
 			<table class="table table-hover">
 				<thead>
 					<tr>
@@ -24,17 +25,19 @@
 						<td th:text="${user.email}">test@uniovi.es</td>
 						<td th:text="${user.name}">Nombre del usuario</td>
 						<td th:text="${user.surname}">Apellidos del usuario</td>
-						<td th:text="${user.active}"></td>
-						<td>
-						<input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1"></td>
-						<td><a th:href="${'/user/delete/' + user.id}"></a></td>
+						<td><input type="checkbox" name="idsUser"
+							th:value="${user.id}" /></td>
+
 					</tr>
 				</tbody>
 			</table>
-			<form class="form-inline">
-  
-  <button type="submit" class="btn btn-primary mb-2">Eliminar</button>
-</form>
+			<div class="form-group">
+				<input class="btn btn-danger" type="submit"
+					th:value="#{delete.button}" />
+					
+					
+			</div>
+			</form>
 		</div>
 
 	</div>

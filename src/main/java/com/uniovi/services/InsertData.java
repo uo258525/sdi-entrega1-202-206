@@ -18,25 +18,28 @@ public class InsertData {
 	public void insertData() {
 		 User user = new User();
 		 user.setRol(Rol.ROLE_ADMIN);
-		 user.setEmail("admin");
+		 user.setEmail("admin@email.com");
 		 user.setPassword("admin");
 		 user.setPassword2("admin");
+		 user.setActive(true);
 		 userService.addUser(user);
 		 user = new User();
 		 user.setRol(Rol.ROLE_USER);
-		 user.setEmail("user1");
+		 user.setEmail("user1@email.com");
 		 user.setPassword("user1");
 		 user.setPassword2("user1");
 		 user.setName("Juan");
 		 user.setSurname("Diaz");
+		 user.setActive(true);
 		 userService.addUser(user);
 		 user = new User();
 		 user.setRol(Rol.ROLE_USER);
-		 user.setEmail("user2");
+		 user.setEmail("user2@email.com");
 		 user.setPassword("user2");
 		 user.setPassword2("user2");
 		 user.setName("Lucia");
 		 user.setSurname("Fernandez");
+		 user.setActive(true);
 		 userService.addUser(user);
 		 
 	}
