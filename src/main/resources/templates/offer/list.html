@@ -15,40 +15,16 @@
 </head>
 <body>
 
-	<!-- Barra de Navegación superior -->
-	<nav class="navbar navbar-inverse">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse"
-					data-target="#myNavbar">
-					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
-						class="icon-bar"></span>
-				</button>
-				<img src="/img/heart.png" alt="logo" />
-			</div>
-			<div class="collapse navbar-collapse" id="myNavbar">
-				<ul class="nav navbar-nav">
-					<li class="active"><a href="/offer/list">Ver Ofertas</a></li>
-					<li><a href="/offer/add">Agregar Oferta</a></li>
-					<li><a href="/offer/search">Buscar Oferta</a></li>
-				</ul>
-				<ul class="nav navbar-nav navbar-right">
-					<li><a href="/signup"><span
-							class="glyphicon glyphicon-user"></span> Registrate</a></li>
-					<li sec:authorize="isAuthenticated()"><a href="/logout"> <span
-							class="glyphicon glyphicon-log-out"></span> Desconectar
-					</a></li>
-				</ul>
-			</div>
-		</div>
-	</nav>
-
+	<nav th:replace="offer/nav" />
 
 
 	<div class="container">
-		<h2>Ofertas</h2>
-		<p>Las ofertas disponibles en wallapop:</p>
-		<button type="button" id="updateButton" class="btn btn-default">Actualizar</button>
+		<h2
+			th:text="#{offers.message}">Ofertas</h2>
+		<p
+			th:text="#{offeravailable.message}">Las ofertas disponibles en wallapop:</p>
+		<button type="button" id="updateButton" class="btn btn-default"
+		th:text="#{update.message}"></button>
 		<script>
 			$("#updateButton").click(function() {
 				$("#tableoffers").load('/offer/list/update');
@@ -60,8 +36,10 @@
 				<thead>
 					<tr>
 						<th class="col-md-1">id</th>
-						<th>Descripción</th>
-						<th>Precio</th>
+						<th 
+						th:text="#{descripion.message}"></th>
+						<th
+						th:text="#{price.message}"></th>
 						<th class="col-md-1"></th>
 						<th class="col-md-1"></th>
 						<th class="col-md-1"></th>
@@ -71,7 +49,7 @@
 					<tr th:each="offer : ${offerList}">
 						<td th:text="${offer.id}">1</td>
 						<td th:text="${offer.description}">Funda de movil</td>
-						<td th:text="${offer.precio}">10</td>
+						<td th:text="${offer.price}">10</td>
 						<td><a th:href="${'/offer/details/' + offer.id}">detalles</a></td>
 						<td><a th:href="${'/offer/edit/' + offer.id}">modificar</a></td>
 						<td><a th:href="${'/offer/delete/' + offer.id}">eliminar</a></td>

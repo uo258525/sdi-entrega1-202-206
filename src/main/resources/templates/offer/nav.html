@@ -12,31 +12,17 @@
 		<div class="collapse navbar-collapse" id="myNavbar">
 			<ul class="nav navbar-nav" sec:authorize="isAuthenticated()">
 				<li><a href="/">Home</a></li>
-				<li id="offers-menu" class="dropdown"><a class="dropdown-toggle"
-					data-toggle="dropdown" href="#"
-					th:text="#{offermanage.message}"> Gestión de Ofertas <span
-						class="caret"></span>
-				</a>
-					<ul class="dropdown-menu">
-						<li sec:authorize="isAuthenticated()&& hasRole('ROLE_ADMIN')"><a
-							href="/offer/add"
-							th:text="#{offeradd.message}">Agregar Oferta</a></li>
-						<li><a href="/offer/list"
-						th:text="#{offersee.message}">Ver Oferta</a></li>
-					</ul></li>
-				<li id="users-menu" class="dropdown"
-					sec:authorize="isAuthenticated()&& hasRole('ROLE_ADMIN')"><a
-					class="dropdown-toggle" data-toggle="dropdown" href="#"
-					th:text="#{usermanage.message}">
-						Gestión de Usuarios <span class="caret"></span>
-				</a>
-					<ul class="dropdown-menu">
-						<li><a href="/user/add"
-						th:text="#{useradd.message}">Agregar usuario</a></li>
-						<li><a href="/user/list"
-						th:text="#{usersee.message}">Ver Usuarios</a></li>
-					</ul></li>
-			</ul>
+			
+					
+					<ul class="nav navbar-nav">
+					<li class="active"><a href="/offer/list"
+					th:text="#{offersee.message}">Ver Ofertas</a></li>
+					<li><a href="/offer/add"
+					th:text="#{offeradd.message}"></a></li>
+					<li><a href="/offer/search"
+					th:text="#{offersearch.message}"></a></li>
+				</ul>
+				
 			<ul class="nav navbar-nav navbar-right">
 				<li class="dropdown"><a id="btnLanguage" href="#"
 					class="dropdown-toggle" data-toggle="dropdown" role="button"
