@@ -22,13 +22,13 @@ public class Offer {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	private String title;// object name
-	private String details; // details of the object
 	private String description;// description of the object
 	private LocalDateTime date; // date of objet upload
 	private double price;
 
 	@Enumerated(EnumType.STRING)
-	private SaleStatus status; // offer status->possibility for the user to active and deactive an offer
+	private SaleStatus status; // offer status->possibility for the user to
+								// active and deactive an offer
 
 	@ManyToOne
 	private User owner;
@@ -52,14 +52,6 @@ public class Offer {
 
 	public void setTitle(String title) {
 		this.title = title;
-	}
-
-	public String getDetails() {
-		return details;
-	}
-
-	public void setDetails(String details) {
-		this.details = details;
 	}
 
 	public String getDescription() {
@@ -134,9 +126,10 @@ public class Offer {
 
 	@Override
 	public String toString() {
-		return "Offer [id=" + id + ", title=" + title + ", details=" + details + ", description=" + description
-				+ ", date=" + date + ", price=" + price + ", status=" + status + ", owner=" + owner + ", buyer=" + buyer
-				+ "]";
+		return "Offer [id=" + id + ", title=" + title + ", description="
+				+ description + ", date=" + date + ", price=" + price
+				+ ", status=" + status + ", owner=" + owner + ", buyer=" + buyer
+				+ ", messages=" + messages + "]";
 	}
 
 }
