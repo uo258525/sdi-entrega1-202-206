@@ -22,7 +22,7 @@
 		<h2
 			th:text="#{offers.message}">Ofertas</h2>
 		<p
-			th:text="#{offeravailable.message}">Las ofertas disponibles en wallapop:</p>
+			th:text="#{offersavailable.message}">Las ofertas disponibles en wallapop:</p>
 		<button type="button" id="updateButton" class="btn btn-default"
 		th:text="#{update.message}"></button>
 		<script>
@@ -37,7 +37,7 @@
 					<tr>
 						<th class="col-md-1">id</th>
 						<th 
-						th:text="#{descripion.message}"></th>
+						th:text="#{title.message}"></th>
 						<th
 						th:text="#{price.message}"></th>
 						<th class="col-md-1"></th>
@@ -48,10 +48,10 @@
 				<tbody>
 					<tr th:each="offer : ${offerList}">
 						<td th:text="${offer.id}">1</td>
-						<td th:text="${offer.description}">Funda de movil</td>
+						<td th:text="${offer.title}">Funda de movil</td>
 						<td th:text="${offer.price}">10</td>
 						<td><a th:href="${'/offer/details/' + offer.id}">detalles</a></td>
-						<td><a th:href="${'/offer/edit/' + offer.id}">modificar</a></td>
+						
 						<td><a th:href="${'/offer/delete/' + offer.id}">eliminar</a></td>
 					</tr>
 				</tbody>

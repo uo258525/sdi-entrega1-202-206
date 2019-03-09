@@ -19,7 +19,7 @@ public interface OfferRepository extends JpaRepository <Offer, Long>{
 	 @Query("SELECT r FROM Offer r WHERE r.owner = ?1 ORDER BY r.id ASC ")
 	 Page<Offer> findAllByUser(Pageable pageable, User user);
 	 
-	 @Query("SELECT r FROM Offer r WHERE (LOWER(r.description) LIKE LOWER(?1) OR LOWER(r.owner.name) LIKE LOWER(?1))")
+	 @Query("SELECT r FROM Offer r WHERE (LOWER(r.title) LIKE LOWER(?1) OR LOWER(r.owner.name) LIKE LOWER(?1))")
 	 Page<Offer> searchByDescriptionAndName(Pageable pageable, String seachtext);
 	 
 	 @Query("SELECT r FROM Offer r WHERE (LOWER(r.description) LIKE LOWER(?1) OR  LOWER(r.owner.name) LIKE LOWER(?1)) AND r.owner = ?2")

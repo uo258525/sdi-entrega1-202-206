@@ -19,10 +19,10 @@
 
 
 	<div class="container">
-		<form class="navbar-form" action="/offer/search/filter">
+		<form class="navbar-form" action="/offer/search">
 			<div class="form-group">
 				<input name="searchText" type="text" class="form-control" size="50"
-					placeholder="Buscar por descripción o nombre del alumno">
+					placeholder="Buscar por nombre de offerta">
 			</div>
 			<button type="submit" class="btn btn-default">Buscar</button>
 		</form>
@@ -40,8 +40,10 @@
 				<thead>
 					<tr>
 						<th class="col-md-1">id</th>
-						<th>Descripción</th>
-						<th>Precio</th>
+						<th 
+						th:text="#{title.message}"></th>
+						<th 
+						th:text="#{price.message}"></th>
 						<th class="col-md-1"></th>
 						<th class="col-md-1"></th>
 						<th class="col-md-1"></th>
@@ -50,10 +52,10 @@
 				<tbody>
 					<tr th:each="offer : ${offerList}">
 						<td th:text="${offer.id}">1</td>
-						<td th:text="${offer.description}">Funda de movil</td>
-						<td th:text="${offer.precio}">10</td>
+						<td th:text="${offer.title}">Funda de movil</td>
+						<td th:text="${offer.price}">10</td>
 						<td><a th:href="${'/offer/details/' + offer.id}">detalles</a></td>
-						<td><a th:href="${'/offer/edit/' + offer.id}">modificar</a></td>
+						
 						<td><a th:href="${'/offer/delete/' + offer.id}">eliminar</a></td>
 					</tr>
 				</tbody>

@@ -61,7 +61,7 @@ public class OffersService {
 
 
 
-	public Page<Offer> searchOffersByDescriptionAndNameForUser(Pageable pageable, String searchText, User user) {
+	public Page<Offer> searchOffersByDescriptionAndName(Pageable pageable, String searchText) {
 		Page<Offer> offers = new PageImpl<Offer>(new LinkedList<Offer>());
 		searchText = "%" + searchText + "%";
 		

@@ -1,10 +1,8 @@
 package com.uniovi.controllers;
 
-import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -18,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.uniovi.entities.User;
+import com.uniovi.entities.type.Rol;
 import com.uniovi.services.SecurityService;
 import com.uniovi.services.UserService;
 import com.uniovi.validators.SignUpFormValidator;
@@ -45,6 +44,7 @@ public class UsersController {
 		if (result.hasErrors()) {
 			return "signup";
 		}
+		user.setRol(Rol.ROLE_USER);
 
 		usersService.addUser(user);
 		securityService.autoLogin(user.getEmail(), user.getPassword2());
