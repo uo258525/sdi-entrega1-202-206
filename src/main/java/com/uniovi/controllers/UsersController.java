@@ -26,7 +26,7 @@ public class UsersController {
 	@Autowired
 	private UserService usersService;
 
-	@Autowired
+	@Autowired 
 	private SignUpFormValidator signUpFormValidator;
 
 	@Autowired
