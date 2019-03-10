@@ -45,6 +45,7 @@ public class UsersController {
 			return "signup";
 		}
 		user.setRol(Rol.ROLE_USER);
+	
 
 		usersService.addUser(user);
 		securityService.autoLogin(user.getEmail(), user.getPassword2());

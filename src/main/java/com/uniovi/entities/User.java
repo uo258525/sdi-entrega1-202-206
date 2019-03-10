@@ -33,7 +33,7 @@ public class User {
 	private String name;
 	private String surname;
 	private String password;
-	private double moneyAccount;
+	private double moneyAccount=100;
 	private boolean active;
 
 	@Enumerated(EnumType.STRING)
@@ -189,6 +189,7 @@ public class User {
 		{
 			setMoneyAccount(getMoneyAccount()-offer.getPrice());
 			offer.setStatus(SaleStatus.SOLD);
+			System.out.println("acount  "+getMoneyAccount()+"!!!");
 			offer.setBuyer(this);
 			
 		}
