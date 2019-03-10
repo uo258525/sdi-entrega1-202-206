@@ -44,12 +44,8 @@
 			<div class="panel-heading">email</div>
 			<div class="panel-body" th:text="${offer.owner.email}">aaaa@uniovi.es</div>
 		</div>
+		<button>
+		<td><a th:href="${'/offer/list/buy/' + offer.id}">comprar</a></td></button>
 		
-		<button type="button" id="buyButton" class="btn btn-default">Comprar</button>
-		<script>
-			$("#buyButton").click(function() {
-				$("#tableoffers").load('/offer/list/buy');
-			});
-		</script>
 </body>
 </html>

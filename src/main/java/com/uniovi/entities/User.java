@@ -14,6 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
 import com.uniovi.entities.type.Rol;
+import com.uniovi.entities.type.SaleStatus;
 
 @Entity
 public class User {
@@ -55,7 +56,7 @@ public class User {
 
 	
 	public User() {
-
+		setMoneyAccount(100);
 	}
 
 	public Long getId() {
@@ -181,6 +182,24 @@ public class User {
 				+ ", active=" + active + ", rol=" + rol + ", purchasedOffers="
 				+ purchasedOffers + ", announcedOffers=" + announcedOffers
 				+ "]";
+	}
+
+	public void buyOffer(Offer offer) {
+		if(getMoneyAccount()-offer.getPrice()>=0)
+		{
+			setMoneyAccount(getMoneyAccount()-offer.getPrice());
+			offer.setStatus(SaleStatus.SOLD);
+			offer.setBuyer(this);
+			
+		}
+		else
+		{
+			System.out.println("Not enough Money!!!!!!!!!!!Figure what to show!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+			System.out.println(getMoneyAccount()+"!!!");
+			System.out.println("price: "+offer.getPrice());
+			System.out.println("price: "+offer.getTitle());
+		}
+		
 	}
 
 }
