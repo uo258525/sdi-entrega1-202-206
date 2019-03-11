@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="fragments/head" />
+<body>
+
+	<nav th:replace="offer/nav" />
+
+
+	<div class="container">
+		<h2 th:text="#{offers.message}">Ofertas</h2>
+		<div th:if="${param.error}"
+			class="alert alert-dismissible alert-danger">
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			<strong th:text="#{offer.list.error}">Oh snap!</strong>
+		</div>
+		<div th:if="${param.bought}"
+			class="alert alert-dismissible alert-success">
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			<strong th:text="#{offer.list.bought}">Oh snap!</strong>
+		</div>
+		<p th:text="#{offerbought.message}"></p>
+		
+		<div class="table-responsive">
+			<table class="table table-hover" th:fragment="tableoffers"
+				id="tableoffers">
+				<thead>
+					<tr>
+						<th class="col-md-1">id</th>
+						<th th:text="#{title.message}"></th>
+						<th th:text="#{price.message}"></th>
+						<th class="col-md-1"></th>
+						<th class="col-md-1"></th>
+						<th class="col-md-1"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="offer : ${offerList}">
+						<td th:text="${offer.id}">1</td>
+						<td th:text="${offer.title}">Funda de movil</td>
+						<td th:text="${offer.price}">10</td>
+						
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+<div th:replace="fragments/pagination" sec:authorize = "hasRole ('ROLE_USER')"/>
+
+</body>
+</html>

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.uniovi.entities.Offer;
 import com.uniovi.entities.User;
+import com.uniovi.entities.type.SaleStatus;
 import com.uniovi.services.OffersService;
 import com.uniovi.services.UserService;
 
@@ -45,6 +46,31 @@ public class OffersController {
 		model.addAttribute("offerList", offers.getContent());
 		model.addAttribute("page", offers); 
 		return "offer/list";
+	}
+	@RequestMapping("/offer/selling")
+	public String getSellingList(Model model, Pageable pageable, Principal principal) {
+
+		String email = principal.getName();
+		User user = usersService.getUserByEmail(email);
+		Page<Offer> offers = new PageImpl<Offer>(new LinkedList<Offer>());
+		offers = offersService.getOffersOwn(pageable, user);
+
+		model.addAttribute("offerList", offers.getContent());
+		model.addAttribute("page", offers); 
+		return "offer/selling";
+	}
+	
+	@RequestMapping("/offer/bought")
+	public String getBoughtList(Model model, Pageable pageable, Principal principal) {
+
+		String email = principal.getName();
+		User user = usersService.getUserByEmail(email);
+		Page<Offer> offers = new PageImpl<Offer>(new LinkedList<Offer>());
+		offers = offersService.getOffersBought(pageable, user);
+
+		model.addAttribute("offerList", offers.getContent());
+		model.addAttribute("page", offers); 
+		return "offer/bought";
 	}
 
 	@RequestMapping("/offer/search")
@@ -88,6 +114,7 @@ public class OffersController {
 
 	@RequestMapping("/offer/delete/{id}")
 	public String deleteoffer(@PathVariable Long id) {
+		
 		offersService.deleteOffer(id);
 		return "redirect:/offer/list";
 	}
