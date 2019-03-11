@@ -1,30 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<title>myWallapop</title>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
-<link rel="stylesheet" href="/css/wallapop.css" />
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-</head>
+<head th:replace="fragments/head" />
 <body>
 
 	<nav th:replace="offer/nav" />
 
 
 	<div class="container">
-		<h2
-			th:text="#{offers.message}">Ofertas</h2>
-		<p
-			th:text="#{offersavailable.message}">Las ofertas disponibles en wallapop:</p>
+		<h2 th:text="#{offers.message}">Ofertas</h2>
+		<div th:if="${param.error}"
+			class="alert alert-dismissible alert-danger">
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			<strong th:text="#{offer.list.error}">Oh snap!</strong>
+		</div>
+		<div th:if="${param.bought}"
+			class="alert alert-dismissible alert-success">
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			<strong th:text="#{offer.list.bought}">Oh snap!</strong>
+		</div>
+		<p th:text="#{offersavailable.message}">Las ofertas disponibles en
+			wallapop:</p>
 		<button type="button" id="updateButton" class="btn btn-default"
-		th:text="#{update.message}"></button>
+			th:text="#{update.message}"></button>
 		<script>
 			$("#updateButton").click(function() {
 				$("#tableoffers").load('/offer/list/update');
@@ -36,10 +33,8 @@
 				<thead>
 					<tr>
 						<th class="col-md-1">id</th>
-						<th 
-						th:text="#{title.message}"></th>
-						<th
-						th:text="#{price.message}"></th>
+						<th th:text="#{title.message}"></th>
+						<th th:text="#{price.message}"></th>
 						<th class="col-md-1"></th>
 						<th class="col-md-1"></th>
 						<th class="col-md-1"></th>
@@ -56,7 +51,7 @@
 					</tr>
 				</tbody>
 			</table>
-		</div>		
+		</div>
 	</div>
 
 

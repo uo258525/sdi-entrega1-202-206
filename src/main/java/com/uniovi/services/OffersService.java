@@ -1,9 +1,6 @@
 package com.uniovi.services;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Set;
 
-import javax.servlet.http.HttpSession;
+import java.util.LinkedList;
 
 import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,36 +13,29 @@ import com.uniovi.entities.Offer;
 import com.uniovi.entities.User;
 import com.uniovi.entities.type.SaleStatus;
 import com.uniovi.repositories.OfferRepository;
+import com.uniovi.repositories.UserRepository;
 
 @Service
 public class OffersService {
-	@Autowired
-	private HttpSession httpSession;
 
 	@Autowired
 	private OfferRepository offersRepository;
+
+	@Autowired
+	private UserRepository userRepository;
 
 	public Page<Offer> getOffers(Pageable pageable) {
 		Page<Offer> Offers = offersRepository.findAll(pageable);
 		return Offers;
 	}
+
 	public Page<Offer> getOffersForUser(Pageable pageable, User user) {
-		Page<Offer> offers = new PageImpl<Offer>(new LinkedList<Offer>());
-		
-		offers = getOffers(pageable);
-		
-		return offers;
+		return offersRepository.findByOwnerIdAndStatusIsNot(pageable,user.getId(),
+				SaleStatus.SOLD);
 	}
 
 	public Offer getOffer(Long id) {
-		Set<Offer> consultedList = (Set<Offer>)httpSession.getAttribute("consultedList");
-		if (consultedList == null) {
-			consultedList = new HashSet<Offer>();
-		}
-		Offer offerObtained = offersRepository.findById(id).get();
-		consultedList.add(offerObtained);
-		httpSession.setAttribute("consultedList", consultedList);
-		return offerObtained;
+		return offersRepository.getOne(id);
 	}
 
 	public void addOffer(Offer offer, User user) {
@@ -59,15 +49,21 @@ public class OffersService {
 		offersRepository.deleteById(id);
 	}
 
-
-
-	public Page<Offer> searchOffersByDescriptionAndName(Pageable pageable, String searchText) {
+	public Page<Offer> searchOffersByDescriptionAndName(Pageable pageable,
+			String searchText) {
 		Page<Offer> offers = new PageImpl<Offer>(new LinkedList<Offer>());
 		searchText = "%" + searchText + "%";
-		
-		offers = offersRepository.searchByDescriptionAndName(pageable, searchText);		
-		
+		offers = offersRepository.searchByDescriptionAndName(pageable,
+				searchText);
 		return offers;
 	}
+
+	public boolean buyOffer(Offer offer, User user) {
+		boolean result = user.buyOffer(offer);
+		if (result) {
+			offersRepository.save(offer);
+			userRepository.save(user);
+		}
+		return result;
+	}
 }
-	

@@ -37,17 +37,13 @@ public class OffersController {
 	@RequestMapping("/offer/list")
 	public String getList(Model model, Pageable pageable, Principal principal) {
 
-		String email = principal.getName(); // DNI es el name de la
-											// autenticación
+		String email = principal.getName();
 		User user = usersService.getUserByEmail(email);
 		Page<Offer> offers = new PageImpl<Offer>(new LinkedList<Offer>());
-
-		
 		offers = offersService.getOffersForUser(pageable, user);
-		
+
 		model.addAttribute("offerList", offers.getContent());
-		model.addAttribute("page", offers); // Busca en
-											// templates/fragments/offer
+		model.addAttribute("page", offers); 
 		return "offer/list";
 	}
 
@@ -60,7 +56,8 @@ public class OffersController {
 		Page<Offer> offers = new PageImpl<Offer>(new LinkedList<Offer>());
 
 		if (searchText != null && !searchText.isEmpty()) {
-			offers = offersService.searchOffersByDescriptionAndName(pageable, searchText);
+			offers = offersService.searchOffersByDescriptionAndName(pageable,
+					searchText);
 		} else {
 			offers = offersService.getOffersForUser(pageable, user);
 		}
@@ -70,7 +67,6 @@ public class OffersController {
 		return "offer/search";
 	}
 
-	
 	@RequestMapping(value = "/offer/add", method = RequestMethod.POST)
 	public String setoffer(@ModelAttribute Offer offer, Principal principal) {
 		User user = usersService.getUserByEmail(principal.getName());
@@ -96,25 +92,29 @@ public class OffersController {
 		return "redirect:/offer/list";
 	}
 
-	
 	@RequestMapping("/offer/list/update")
-	public String updateList(Model model, Pageable pageable, Principal principal) {
+	public String updateList(Model model, Pageable pageable,
+			Principal principal) {
 		String email = principal.getName();
-		
+
 		User user = usersService.getUserByEmail(email);
 
 		Page<Offer> offers = offersService.getOffersForUser(pageable, user);
 		model.addAttribute("offerList", offers.getContent());
 		return "offer/list :: tableoffers";
 	}
+
 	@RequestMapping("/offer/list/buy/{id}")
-	public String buyOffer(Model model, Pageable pageable,@PathVariable Long id, Principal principal) {
+	public String buyOffer(Model model, Pageable pageable,
+			@PathVariable Long id, Principal principal) {
 		Offer offer = offersService.getOffer(id);
 		String email = principal.getName();
 		// DNI es el name de la autenticación
 		User user = usersService.getUserByEmail(email);
-		user.buyOffer(offer);
-		
-		return "redirect:/offer/list";
+		boolean result = offersService.buyOffer(offer, user);
+		if(result) {
+			return "redirect:/offer/list?bought";
+		}
+		return "redirect:/offer/list?error";
 	}
 }

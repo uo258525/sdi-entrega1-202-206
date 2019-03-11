@@ -33,17 +33,17 @@ public class User {
 	private String name;
 	private String surname;
 	private String password;
-	private double moneyAccount=100;
+	private double moneyAccount = 100;
 	private boolean active;
 
 	@Enumerated(EnumType.STRING)
 	private Rol rol;
-	
-	@OneToMany (mappedBy="sender")
-	private Set<Message> messagesSent=new HashSet<>();
-	
-	@OneToMany (mappedBy="receiver")
-	private Set<Message> messagesReceived=new HashSet<>();
+
+	@OneToMany(mappedBy = "sender")
+	private Set<Message> messagesSent = new HashSet<>();
+
+	@OneToMany(mappedBy = "receiver")
+	private Set<Message> messagesReceived = new HashSet<>();
 
 	@OneToMany(mappedBy = "owner")
 	private Set<Offer> purchasedOffers = new HashSet<>(); // las ofertas que
@@ -54,7 +54,6 @@ public class User {
 															// publicadas por el
 															// usuario
 
-	
 	public User() {
 		setMoneyAccount(100);
 	}
@@ -184,23 +183,16 @@ public class User {
 				+ "]";
 	}
 
-	public void buyOffer(Offer offer) {
-		if(getMoneyAccount()-offer.getPrice()>=0)
-		{
-			setMoneyAccount(getMoneyAccount()-offer.getPrice());
+	public boolean buyOffer(Offer offer) {
+		if (getMoneyAccount() - offer.getPrice() >= 0) {
+			setMoneyAccount(getMoneyAccount() - offer.getPrice());
 			offer.setStatus(SaleStatus.SOLD);
-			System.out.println("acount  "+getMoneyAccount()+"!!!");
+//			System.out.println("acount  " + getMoneyAccount() + "!!!");
 			offer.setBuyer(this);
-			
-		}
-		else
-		{
-			System.out.println("Not enough Money!!!!!!!!!!!Figure what to show!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-			System.out.println(getMoneyAccount()+"!!!");
-			System.out.println("price: "+offer.getPrice());
-			System.out.println("price: "+offer.getTitle());
-		}
-		
+			return true;
+		} 
+		return false;
+
 	}
 
 }
