@@ -18,15 +18,8 @@
 			<button type="button" class="close" data-dismiss="alert">&times;</button>
 			<strong th:text="#{offer.list.bought}">Oh snap!</strong>
 		</div>
-		<p th:text="#{offersavailable.message}">Las ofertas disponibles en
-			wallapop:</p>
-		<button type="button" id="updateButton" class="btn btn-default"
-			th:text="#{update.message}"></button>
-		<script>
-			$("#updateButton").click(function() {
-				$("#tableoffers").load('/offer/list/update');
-			});
-		</script>
+		<p th:text="#{offerbought.message}"></p>
+		
 		<div class="table-responsive">
 			<table class="table table-hover" th:fragment="tableoffers"
 				id="tableoffers">
@@ -35,7 +28,6 @@
 						<th class="col-md-1">id</th>
 						<th th:text="#{title.message}"></th>
 						<th th:text="#{price.message}"></th>
-						<th th:text="#{special.message}"></th>
 						<th class="col-md-1"></th>
 						<th class="col-md-1"></th>
 						<th class="col-md-1"></th>
@@ -46,10 +38,7 @@
 						<td th:text="${offer.id}">1</td>
 						<td th:text="${offer.title}">Funda de movil</td>
 						<td th:text="${offer.price}">10</td>
-						<td th:text="${offer.special}">sip</td>
-						<td><a th:href="${'/offer/details/' + offer.id}">detalles</a></td>
-						<td><a th:href="${'/offer/details/' + offer.id}">comprar</a></td>
-						<td><a th:href="${'/offer/delete/' + offer.id}">eliminar</a></td>
+						
 					</tr>
 				</tbody>
 			</table>

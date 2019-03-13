@@ -33,4 +33,9 @@ public interface OfferRepository extends JpaRepository<Offer, Long> {
 	
 	Page<Offer> findByOwnerIdAndStatusIsNot(Pageable pageable, Long id, SaleStatus status);
 
+	Page<Offer> findByOwnerIdIsNotAndStatusIsNot(Pageable pageable, Long id, SaleStatus status);
+
+	@Query("SELECT r FROM Offer r WHERE r.buyer = ?1 ORDER BY r.id ASC ")
+	Page<Offer> findBoughtByUser(Pageable pageable, User user);
+
 }

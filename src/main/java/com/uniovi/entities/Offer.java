@@ -25,6 +25,7 @@ public class Offer {
 	private String description;// description of the object
 	private LocalDateTime date; // date of objet upload
 	private double price;
+	
 
 	@Enumerated(EnumType.STRING)
 	private SaleStatus status; // offer status->possibility for the user to
@@ -131,5 +132,9 @@ public class Offer {
 				+ ", status=" + status + ", owner=" + owner + ", buyer=" + buyer
 				+ ", messages=" + messages + "]";
 	}
+
+	
+
+	
 
 }
