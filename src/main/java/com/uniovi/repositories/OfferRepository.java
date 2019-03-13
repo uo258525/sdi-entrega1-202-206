@@ -27,8 +27,10 @@ public interface OfferRepository extends JpaRepository<Offer, Long> {
 
 	Page<Offer> findAll(Pageable pageable);
 	
-	@Query("SELECT s FROM Offer s WHERE s.status ='AVAILABLE'OR "
-			+ "s.status='HIGHLIGHTED' AND s.owner.id != ?1")
+	
+	//other users offers
+	@Query("SELECT s FROM Offer s WHERE (s.status ='AVAILABLE'OR "
+			+ "s.status='HIGHLIGHTED') AND s.owner.id != ?1")
 	Page<Offer> findToSell (Pageable pageable, Long id);
 	
 	Page<Offer> findByOwnerIdAndStatusIsNot(Pageable pageable, Long id, SaleStatus status);
