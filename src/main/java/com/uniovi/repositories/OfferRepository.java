@@ -9,6 +9,7 @@ import com.uniovi.entities.Offer;
 import com.uniovi.entities.User;
 import com.uniovi.entities.type.SaleStatus;
 
+
 public interface OfferRepository extends JpaRepository<Offer, Long> {
 
 	@Query("SELECT r FROM Offer r WHERE r.owner = ?1 ORDER BY r.id ASC ")
@@ -25,6 +26,10 @@ public interface OfferRepository extends JpaRepository<Offer, Long> {
 			String seachtext, User user);
 
 	Page<Offer> findAll(Pageable pageable);
+	
+	@Query("SELECT s FROM Offer s WHERE s.status ='AVAILABLE'OR "
+			+ "s.status='HIGHLIGHTED' AND s.owner.id != ?1")
+	Page<Offer> findToSell (Pageable pageable, Long id);
 	
 	Page<Offer> findByOwnerIdAndStatusIsNot(Pageable pageable, Long id, SaleStatus status);
 

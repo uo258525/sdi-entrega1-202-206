@@ -48,6 +48,16 @@ public class InsertData {
 		user.setActive(true);
 		userService.addUser(user);
 		
+		user = new User();
+		user.setRol(Rol.ROLE_USER);
+		user.setEmail("user3@email.com");
+		user.setPassword("user3");
+		user.setPassword2("user3");
+		user.setName("Alba");
+		user.setSurname("García");
+		user.setActive(true);
+		userService.addUser(user);
+		
 		Offer offer = new Offer();
 		offer.setTitle("taza");
 		offer.setDescription("muy práctica");
