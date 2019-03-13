@@ -22,13 +22,13 @@
 		<form class="navbar-form" action="/offer/search">
 			<div class="form-group">
 				<input name="searchText" type="text" class="form-control" size="50"
-					placeholder="Buscar por nombre de offerta">
+					 placeholder= "Buscar por titulo de oferta">
 			</div>
-			<button type="submit" class="btn btn-default">Buscar</button>
+			<button type="submit" class="btn btn-default" th:text="#{offersearch.message}"></button>
 		</form>
-		<h2>Ofertas</h2>
-		<p>Las ofertas disponibles en wallapop:</p>
-		<button type="button" id="updateButton" class="btn btn-default">Actualizar</button>
+		<h2 th:text="#{offers.message}">Ofertas</h2>
+		<p th:text="#{offersavailable.message}">Las ofertas disponibles en wallapop:</p>
+		<button type="button" id="updateButton" class="btn btn-default" th:text="#{update.message}"></button>
 		<script>
 			$("#updateButton").click(function() {
 				$("#tableoffers").load('/offer/list/update');
