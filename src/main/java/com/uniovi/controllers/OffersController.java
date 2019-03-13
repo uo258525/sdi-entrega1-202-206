@@ -3,8 +3,6 @@ package com.uniovi.controllers;
 import java.security.Principal;
 import java.util.LinkedList;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -19,15 +17,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.uniovi.entities.Offer;
 import com.uniovi.entities.User;
-import com.uniovi.entities.type.SaleStatus;
 import com.uniovi.services.OffersService;
 import com.uniovi.services.UserService;
 
 @Controller
 public class OffersController {
-
-	@Autowired
-	private HttpSession httpSession;
 
 	@Autowired // Anotacion para Inyectar el servicio
 	private OffersService offersService;
@@ -44,11 +38,13 @@ public class OffersController {
 		offers = offersService.getOffersForUser(pageable, user);
 
 		model.addAttribute("offerList", offers.getContent());
-		model.addAttribute("page", offers); 
+		model.addAttribute("page", offers);
 		return "offer/list";
 	}
+
 	@RequestMapping("/offer/selling")
-	public String getSellingList(Model model, Pageable pageable, Principal principal) {
+	public String getSellingList(Model model, Pageable pageable,
+			Principal principal) {
 
 		String email = principal.getName();
 		User user = usersService.getUserByEmail(email);
@@ -56,12 +52,13 @@ public class OffersController {
 		offers = offersService.getOffersOwn(pageable, user);
 
 		model.addAttribute("offerList", offers.getContent());
-		model.addAttribute("page", offers); 
+		model.addAttribute("page", offers);
 		return "offer/selling";
 	}
-	
+
 	@RequestMapping("/offer/bought")
-	public String getBoughtList(Model model, Pageable pageable, Principal principal) {
+	public String getBoughtList(Model model, Pageable pageable,
+			Principal principal) {
 
 		String email = principal.getName();
 		User user = usersService.getUserByEmail(email);
@@ -69,7 +66,7 @@ public class OffersController {
 		offers = offersService.getOffersBought(pageable, user);
 
 		model.addAttribute("offerList", offers.getContent());
-		model.addAttribute("page", offers); 
+		model.addAttribute("page", offers);
 		return "offer/bought";
 	}
 
@@ -107,14 +104,22 @@ public class OffersController {
 	}
 
 	@RequestMapping("/offer/details/{id}")
-	public String getDetail(Model model, @PathVariable Long id) {
-		model.addAttribute("offer", offersService.getOffer(id));
+	public String getDetail(Model model, Principal principal,
+			@PathVariable Long id) {
+		User user = usersService.getUserByEmail(principal.getName());
+		Offer offer = offersService.getOffer(id);
+		if (offer.getOwner().equals(user)) {
+			model.addAttribute("owner", true);
+		} else {
+			model.addAttribute("owner", false);
+		}
+		model.addAttribute("offer", offer);
 		return "offer/details";
 	}
 
 	@RequestMapping("/offer/delete/{id}")
 	public String deleteoffer(@PathVariable Long id) {
-		
+
 		offersService.deleteOffer(id);
 		return "redirect:/offer/list";
 	}
@@ -139,11 +144,10 @@ public class OffersController {
 		// DNI es el name de la autenticación
 		User user = usersService.getUserByEmail(email);
 		boolean result = offersService.buyOffer(offer, user);
-		if(result) {
+		if (result) {
 			return "redirect:/offer/list?bought";
 		}
 		return "redirect:/offer/list?error";
 	}
-	
 
 }

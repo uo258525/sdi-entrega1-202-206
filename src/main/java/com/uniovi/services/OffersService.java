@@ -30,15 +30,15 @@ public class OffersService {
 	}
 
 	public Page<Offer> getOffersForUser(Pageable pageable, User user) {
-		return offersRepository.findByOwnerIdIsNotAndStatusIsNot(pageable,user.getId(),
-				SaleStatus.SOLD);
+		return offersRepository.findToSell(pageable, user.getId());
 	}
-	
+
 	public Page<Offer> getOffersOwn(Pageable pageable, User user) {
-		return offersRepository.findAllByUser(pageable,user);
+		return offersRepository.findAllByUser(pageable, user);
 	}
+
 	public Page<Offer> getOffersBought(Pageable pageable, User user) {
-		return offersRepository.findBoughtByUser(pageable,user);
+		return offersRepository.findBoughtByUser(pageable, user);
 	}
 
 	public Offer getOffer(Long id) {
@@ -53,7 +53,7 @@ public class OffersService {
 	}
 
 	public void deleteOffer(Long id) {
-		//offersRepository.deleteById(id);
+		// offersRepository.deleteById(id);
 		Offer offer = getOffer(id);
 		offer.setStatus(SaleStatus.NOTAVAILABLE);
 	}
@@ -76,5 +76,4 @@ public class OffersService {
 		return result;
 	}
 
-	
 }

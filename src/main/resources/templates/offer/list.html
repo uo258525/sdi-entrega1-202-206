@@ -3,7 +3,7 @@
 <head th:replace="fragments/head" />
 <body>
 
-	<nav th:replace="offer/nav" />
+	<nav th:replace="fragments/nav" />
 
 
 	<div class="container">
@@ -35,8 +35,13 @@
 						<th class="col-md-1">id</th>
 						<th th:text="#{title.message}"></th>
 						<th th:text="#{price.message}"></th>
+<<<<<<< HEAD
 						
 						<th class="col-md-1"></th>
+=======
+						<th th:text="#{special.message}"></th>
+						<th>Vendedor</th>
+>>>>>>> 00fb20682f63dcfc831326331b84479b2ca26fd5
 						<th class="col-md-1"></th>
 						<th class="col-md-1"></th>
 					</tr>
@@ -46,16 +51,17 @@
 						<td th:text="${offer.id}">1</td>
 						<td th:text="${offer.title}">Funda de movil</td>
 						<td th:text="${offer.price}">10</td>						
+						<td th:text="${offer.owner.email}"></td>>
 						<td><a th:href="${'/offer/details/' + offer.id}">detalles</a></td>
 						<td><a th:href="${'/offer/details/' + offer.id}">comprar</a></td>
-						<td><a th:href="${'/offer/delete/' + offer.id}">eliminar</a></td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
 	</div>
 
-<div th:replace="fragments/pagination" sec:authorize = "hasRole ('ROLE_USER')"/>
+	<div th:replace="fragments/pagination"
+		sec:authorize="hasRole ('ROLE_USER')" />
 
 </body>
 </html>

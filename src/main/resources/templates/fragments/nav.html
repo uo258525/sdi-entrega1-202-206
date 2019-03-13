@@ -7,36 +7,41 @@
 				<span class="icon-bar"></span> <span class="icon-bar"></span> <span
 					class="icon-bar"></span>
 			</button>
-			<img src="/img/heart.png" alt="logo" />
+			<img src="/img/heart.png" alt="logo" width="50px" />
 		</div>
 		<div class="collapse navbar-collapse" id="myNavbar">
 			<ul class="nav navbar-nav" sec:authorize="isAuthenticated()">
 				<li><a href="/">Home</a></li>
-				<li id="offers-menu" class="dropdown"><a class="dropdown-toggle"
-					data-toggle="dropdown" href="#"
+				<li id="offers-menu" class="dropdown"><a
+					class="dropdown-toggle" data-toggle="dropdown" href="#"
 					th:text="#{offermanage.message}"> Gestión de Ofertas <span
 						class="caret"></span>
 				</a>
 					<ul class="dropdown-menu">
 
 						<li sec:authorize="isAuthenticated()&& hasRole('ROLE_USER')"><a
-							href="/offer/add"
-							th:text="#{offeradd.message}">Agregar Oferta</a></li>
-						<li><a href="/offer/list"
-						th:text="#{offersee.message}">Ver Oferta</a></li>
+							href="/offer/add" th:text="#{offeradd.message}">Agregar
+								Oferta</a></li>
+						<li><a href="/offer/search" th:text="#{offersearch.message}"></a></li>
+						<li><a href="/offer/list" th:text="#{offersee.message}">Ver
+								Ofertas de otros usuarios</a></li>
+						<li><a href="/offer/selling"
+							th:text="#{offerseeMine.message}">Ver Ofertas propias</a></li>
+						<li><a href="/offer/bought"
+							th:text="#{offerseeBought.message}">Ver Ofertas compradas</a></li>
 
 					</ul></li>
 				<li id="users-menu" class="dropdown"
 					sec:authorize="isAuthenticated()&& hasRole('ROLE_ADMIN')"><a
 					class="dropdown-toggle" data-toggle="dropdown" href="#"
-					th:text="#{usermanage.message}">
-						Gestión de Usuarios <span class="caret"></span>
+					th:text="#{usermanage.message}"> Gestión de Usuarios <span
+						class="caret"></span>
 				</a>
 					<ul class="dropdown-menu">
-						<li><a href="/user/add"
-						th:text="#{useradd.message}">Agregar usuario</a></li>
-						<li><a href="/user/list"
-						th:text="#{usersee.message}">Ver Usuarios</a></li>
+						<li><a href="/user/add" th:text="#{useradd.message}">Agregar
+								usuario</a></li>
+						<li><a href="/user/list" th:text="#{usersee.message}">Ver
+								Usuarios</a></li>
 					</ul></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
@@ -47,27 +52,25 @@
 				</a>
 					<ul id="languageDropdownMenuButton" class="dropdown-menu">
 						<li><a id="btnEnglish" value="EN"> <img
-								
 								style="border: 0; float: left; margin-right: 15px" /> <span
 								th:text="#{language.en}">Inglés</span>
 						</a></li>
 						<li><a id="btnSpanish" value="ES"> <img
-								
 								style="border: 0; float: left; margin-right: 15px" /> <span
 								th:text="#{language.es}">Español</span>
 						</a></li>
-					</ul> <li sec:authorize="!isAuthenticated()">
-						<a href="/signup" th:text="#{signup.message}"> <span
-							class="glyphicon glyphicon-user"></span> Registrate
-						</a></li>
-				<li sec:authorize="!isAuthenticated()">
-					<a href="/login" th:text="#{login.message}"> <span
+					</ul>
+				<li sec:authorize="!isAuthenticated()"><a href="/signup"
+					th:text="#{signup.message}"> <span
+						class="glyphicon glyphicon-user"></span> Registrate
+				</a></li>
+				<li sec:authorize="!isAuthenticated()"><a href="/login"
+					th:text="#{login.message}"> <span
 						class="glyphicon glyphicon-log-in"></span> Identifícate
-					</a>
-					</li>
-					<li sec:authorize="isAuthenticated()"><a href="/logout">
-							<span class="glyphicon glyphicon-log-out"></span> Desconectar
-					</a></li>
+				</a></li>
+				<li sec:authorize="isAuthenticated()"><a href="/logout"> <span
+						class="glyphicon glyphicon-log-out"></span> Desconectar
+				</a></li>
 			</ul>
 		</div>
 	</div>
