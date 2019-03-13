@@ -35,15 +35,11 @@
 						<th class="col-md-1">id</th>
 						<th th:text="#{title.message}"></th>
 						<th th:text="#{price.message}"></th>
-<<<<<<< HEAD
+						<th th:text="#{owner.message}"></th>
+						<th class="col-md-1"></th>
+						<th class="col-md-1"></th>
+						<th class="col-md-1"></th>
 						
-						<th class="col-md-1"></th>
-=======
-						<th th:text="#{special.message}"></th>
-						<th>Vendedor</th>
->>>>>>> 00fb20682f63dcfc831326331b84479b2ca26fd5
-						<th class="col-md-1"></th>
-						<th class="col-md-1"></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -51,7 +47,7 @@
 						<td th:text="${offer.id}">1</td>
 						<td th:text="${offer.title}">Funda de movil</td>
 						<td th:text="${offer.price}">10</td>						
-						<td th:text="${offer.owner.email}"></td>>
+						<td th:text="${offer.owner.email}"></td>
 						<td><a th:href="${'/offer/details/' + offer.id}">detalles</a></td>
 						<td><a th:href="${'/offer/details/' + offer.id}">comprar</a></td>
 					</tr>
