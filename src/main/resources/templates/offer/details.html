@@ -30,7 +30,7 @@
 			<div class="panel-heading">email</div>
 			<div class="panel-body" th:text="${offer.owner.email}">aaaa@uniovi.es</div>
 		</div>
-		<button>
+		<button th:if="${!owner}">
 			<td><a th:href="${'/offer/list/buy/' + offer.id}">comprar</a></td>
 		</button>
 </body>

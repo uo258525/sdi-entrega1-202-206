@@ -3,8 +3,6 @@ package com.uniovi.controllers;
 import java.security.Principal;
 import java.util.LinkedList;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -24,9 +22,6 @@ import com.uniovi.services.UserService;
 
 @Controller
 public class OffersController {
-
-	@Autowired
-	private HttpSession httpSession;
 
 	@Autowired // Anotacion para Inyectar el servicio
 	private OffersService offersService;
@@ -109,8 +104,16 @@ public class OffersController {
 	}
 
 	@RequestMapping("/offer/details/{id}")
-	public String getDetail(Model model, @PathVariable Long id) {
-		model.addAttribute("offer", offersService.getOffer(id));
+	public String getDetail(Model model, Principal principal,
+			@PathVariable Long id) {
+		User user = usersService.getUserByEmail(principal.getName());
+		Offer offer = offersService.getOffer(id);
+		if (offer.getOwner().equals(user)) {
+			model.addAttribute("owner", true);
+		} else {
+			model.addAttribute("owner", false);
+		}
+		model.addAttribute("offer", offer);
 		return "offer/details";
 	}
 

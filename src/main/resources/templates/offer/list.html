@@ -36,9 +36,7 @@
 						<th th:text="#{title.message}"></th>
 						<th th:text="#{price.message}"></th>
 						<th th:text="#{special.message}"></th>
-						<th class="col-md-1"></th>
 						<th>Vendedor</th>
-						<th class="col-md-1"></th>
 						<th class="col-md-1"></th>
 						<th class="col-md-1"></th>
 					</tr>
@@ -48,10 +46,10 @@
 						<td th:text="${offer.id}">1</td>
 						<td th:text="${offer.title}">Funda de movil</td>
 						<td th:text="${offer.price}">10</td>
+						<td></td>
 						<td th:text="${offer.owner.email}"></td>
 						<td><a th:href="${'/offer/details/' + offer.id}">detalles</a></td>
 						<td><a th:href="${'/offer/details/' + offer.id}">comprar</a></td>
-						<td><a th:href="${'/offer/delete/' + offer.id}">eliminar</a></td>
 					</tr>
 				</tbody>
 			</table>
