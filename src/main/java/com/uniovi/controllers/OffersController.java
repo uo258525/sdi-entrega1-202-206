@@ -144,4 +144,6 @@ public class OffersController {
 		}
 		return "redirect:/offer/list?error";
 	}
+	
+
 }

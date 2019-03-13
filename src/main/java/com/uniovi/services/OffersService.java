@@ -75,4 +75,6 @@ public class OffersService {
 		}
 		return result;
 	}
+
+	
 }
