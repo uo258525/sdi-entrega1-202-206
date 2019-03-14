@@ -13,34 +13,34 @@
 			<ul class="nav navbar-nav" sec:authorize="isAuthenticated()">
 				<li><a href="/">Home</a></li>
 				<li id="offers-menu" class="dropdown"><a
-					class="dropdown-toggle" data-toggle="dropdown" href="#"
+					class="dropdown-toggle" data-toggle="dropdown" id="offermanage" href="#"
 					th:text="#{offermanage.message}"> Gestión de Ofertas <span
 						class="caret"></span>
 				</a>
 					<ul class="dropdown-menu">
 
 						<li sec:authorize="isAuthenticated()&& hasRole('ROLE_USER')"><a
-							href="/offer/add" th:text="#{offeradd.message}">Agregar
+							href="/offer/add" id="offeradd" th:text="#{offeradd.message}">Agregar
 								Oferta</a></li>
-						<li><a href="/offer/search" th:text="#{offersearch.message}"></a></li>
-						<li><a href="/offer/list" th:text="#{offersee.message}">Ver
+						<li><a href="/offer/search" id="offersearch" th:text="#{offersearch.message}"></a></li>
+						<li><a href="/offer/list" id="offersee" th:text="#{offersee.message}">Ver
 								Ofertas de otros usuarios</a></li>
-						<li><a href="/offer/selling"
+						<li><a href="/offer/selling" id="offerselling"
 							th:text="#{offerseeMine.message}">Ver Ofertas propias</a></li>
-						<li><a href="/offer/bought"
+						<li><a href="/offer/bought" id="offerbought"
 							th:text="#{offerseeBought.message}">Ver Ofertas compradas</a></li>
 
 					</ul></li>
 				<li id="users-menu" class="dropdown"
 					sec:authorize="isAuthenticated()&& hasRole('ROLE_ADMIN')"><a
-					class="dropdown-toggle" data-toggle="dropdown" href="#"
+					class="dropdown-toggle" data-toggle="dropdown" id="usermanage" href="#"
 					th:text="#{usermanage.message}"> Gestión de Usuarios <span
 						class="caret"></span>
 				</a>
 					<ul class="dropdown-menu">
 						<li><a href="/user/add" th:text="#{useradd.message}">Agregar
 								usuario</a></li>
-						<li><a href="/user/list" th:text="#{usersee.message}">Ver
+						<li><a href="/user/list" id="usersee" th:text="#{usersee.message}">Ver
 								Usuarios</a></li>
 					</ul></li>
 			</ul>
@@ -64,11 +64,11 @@
 					th:text="#{signup.message}"> <span
 						class="glyphicon glyphicon-user"></span> Registrate
 				</a></li>
-				<li sec:authorize="!isAuthenticated()"><a href="/login"
+				<li sec:authorize="!isAuthenticated()"><a href="/login" id="login"
 					th:text="#{login.message}"> <span
 						class="glyphicon glyphicon-log-in"></span> Identifícate
 				</a></li>
-				<li sec:authorize="isAuthenticated()"><a href="/logout"> <span
+				<li sec:authorize="isAuthenticated()"><a href="/logout" id="logout"> <span
 						class="glyphicon glyphicon-log-out"></span> Desconectar
 				</a></li>
 			</ul>
