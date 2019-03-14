@@ -42,6 +42,13 @@ public class Offer {
 	public Offer() {
 
 	}
+	public Offer(String title,String description,double price, User owner)
+	{
+		this.title=title;
+		this.description=description;
+		this.price=price;
+		this.owner = owner;
+	}
 
 	public long getId() {
 		return id;
