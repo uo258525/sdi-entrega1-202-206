@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,7 +27,7 @@ public class UsersController {
 	@Autowired
 	private UserService usersService;
 
-	@Autowired 
+	@Autowired
 	private SignUpFormValidator signUpFormValidator;
 
 	@Autowired
@@ -39,17 +40,20 @@ public class UsersController {
 	}
 
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
-	public String signup(@Validated User user, BindingResult result, Model model) {
+	public String signup(@ModelAttribute @Validated User user,
+			BindingResult result, Model model) {
 		signUpFormValidator.validate(user, result);
 		if (result.hasErrors()) {
 			return "signup";
 		}
-		user.setRol(Rol.ROLE_USER);
-	
-
-		usersService.addUser(user);
-		securityService.autoLogin(user.getEmail(), user.getPassword2());
-		return "redirect:home";
+		User user2 = usersService.getUserByEmail(user.getEmail());
+		if (user2 == null) {
+			user.setRol(Rol.ROLE_USER);
+			usersService.addUser(user);
+			securityService.autoLogin(user.getEmail(), user.getPassword2());
+			return "redirect:home";
+		}
+		return "redirect:signup?error";
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
@@ -59,7 +63,8 @@ public class UsersController {
 
 	@RequestMapping(value = { "/home" }, method = RequestMethod.GET)
 	public String home(Model model) {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Authentication auth = SecurityContextHolder.getContext()
+				.getAuthentication();
 		String email = auth.getName();
 		User activeUser = usersService.getUserByEmail(email);
 
