@@ -12,6 +12,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,11 +41,10 @@ public class WallapopTest {
 	// automáticas)):
 	final static String PathFirefox64 = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
 	// helen
-	final static String Geckdriver022 = "C:\\Users\\ediaz\\Downloads\\PL-SDI-Sesión5-material\\PL-SDI-Sesión5-material\\geckodriver024win64.exe";
+	//final static String Geckdriver022 = "C:\\Users\\ediaz\\Downloads\\PL-SDI-Sesión5-material\\PL-SDI-Sesión5-material\\geckodriver024win64.exe";
 
 	// astrid
-	// static String Geckdriver022 =
-	// "C:\\Users\\astri\\Downloads\\PL-SDI-Sesión5-material\\PL-SDI-Sesión5-material\\geckodriver024win64.exe";
+	 static String Geckdriver022 = "C:\\Users\\astri\\Downloads\\PL-SDI-Sesión5-material\\PL-SDI-Sesión5-material\\geckodriver024win64.exe";
 
 	static WebDriver driver = getDriver(PathFirefox64, Geckdriver022);
 	String URL = "http://localhost:8090";
@@ -595,7 +595,9 @@ public class WallapopTest {
 
 	}
 
-	// @Test
+	 @Test
+	 //Mostrar el listado de ofertas para dicho usuario y comprobar que se muestran todas los que
+	 //existen para este usuario
 	public void Prueba18() {
 		// login user
 		driver.get("http://localhost:8090/?lang=ES");
@@ -688,28 +690,61 @@ public class WallapopTest {
 		driver.findElement(By.name("searchText")).sendKeys("wowowo");
 		driver.findElement(By.id("submit")).click();
 
-		testUtil.searchText("taza", false);
-		testUtil.searchText("teclado", false);
+		testUtil.searchText("Oferta 1", false);
+		testUtil.searchText("Oferta 2", false);
+		testUtil.searchText("Oferta 3", false);
+		testUtil.searchText("Oferta 4", false);
+		testUtil.searchText("Oferta 5", false);
 	}
 
-	// @Test
+	@Test
+	//Sobre una búsqueda determinada (a elección de desarrollador), comprar una oferta que deja
+	//un saldo positivo en el contador del comprobador. Y comprobar que el contador se actualiza
+	//correctamente en la vista del comprador
 	public void Prueba23() {
+		
+		
+		testUtil.searchText("correctamente", true);
+		
 
 	}
 
-	// @Test
+	@Test
+	//Sobre una búsqueda determinada (a elección de desarrollador), comprar una oferta que deja
+	//un saldo 0 en el contador del comprobador. Y comprobar que el contador se actualiza correctamente en
+	//la vista del comprador. 
 	public void Prueba24() {
 
 	}
 
-	// @Test
+	 @Test
+	 //Sobre una búsqueda determinada (a elección de desarrollador), intentar comprar una oferta
+	// que esté por encima de saldo disponible del comprador. Y comprobar que se muestra el mensaje de
+	// saldo no suficiente.
 	public void Prueba25() {
 
 	}
-
-	// @Test
+//Ir a la opción de ofertas compradas del usuario y mostrar la lista. Comprobar que aparecen
+	// las ofertas que deben aparecer.
+	@Test
 	public void Prueba26() {
+		driver.get("http://localhost:8090/?lang=ES");
+		driver.findElement(By.id("login")).click();
+		driver.findElement(By.name("username")).click();
+		driver.findElement(By.name("username")).clear();
+		driver.findElement(By.name("username")).sendKeys("user1@email.com");
+		driver.findElement(By.name("password")).click();
+		driver.findElement(By.name("password")).clear();
+		driver.findElement(By.name("password")).sendKeys("user1");
+		driver.findElement(By.id("send")).click();
 
+		driver.findElement(By.id("offermanage")).click();
+		driver.findElement(By.id("offerbought")).click();
+		testUtil.searchText("Oferta 1", false);
+		testUtil.searchText("Oferta 2", false);
+		testUtil.searchText("Oferta 3", false);
+		testUtil.searchText("Oferta 4", false);
+		testUtil.searchText("Oferta 5", false);
 	}
 
 	@Test
@@ -765,17 +800,11 @@ public class WallapopTest {
 	@Test
 	public void Prueba28() {
 		driver.get("http://localhost:8090/?lang=ES");
-		driver.findElement(By.id("login")).click();
-		driver.findElement(By.name("username")).click();
-		driver.findElement(By.name("username")).clear();
-		driver.findElement(By.name("username")).sendKeys("user1@email.com");
-		driver.findElement(By.name("password")).click();
-		driver.findElement(By.name("password")).clear();
-		driver.findElement(By.name("password")).sendKeys("user1");
-
-		driver.findElement(By.id("send")).click();
-		testUtil.searchText("Usuarios", false);
+		testUtil.searchText("Ofertas", false);
 		testUtil.searchText("Ver Usuarios", false);
+		testUtil.searchText("Identíficate", true);
+		driver.get("http://localhost:8090/user/list");
+		testUtil.searchText("Identíficate", true);
 
 	}
 
@@ -788,7 +817,8 @@ public class WallapopTest {
 		testUtil.searchText("Ofertas", false);
 		testUtil.searchText("Ver Usuarios", false);
 		testUtil.searchText("Identíficate", true);
-
+		driver.get("http://localhost:8090/offer/selling");
+		testUtil.searchText("Identíficate", true);
 	}
 
 	@Test
