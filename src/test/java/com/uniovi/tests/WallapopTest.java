@@ -71,7 +71,7 @@ public class WallapopTest {
 	@Before
 	public void setUp() {
 
-		// initdb();
+		initdb();
 		testUtil = new TestUtil(driver);
 		driver.navigate().to(URL);
 	}
@@ -272,7 +272,7 @@ public class WallapopTest {
 	}
 	
 	//Registro de Usuario con datos inválidos (email existente).
-	//@Test
+	@Test
 	public void Prueba4() {
 		driver.get("http://localhost:8090/?lang=ES");
 	    driver.findElement(By.id("signup")).click();
@@ -300,7 +300,7 @@ public class WallapopTest {
 	// 2
 	
 	//Inicio de sesión con datos válidos (administrador).
-	//@Test
+	@Test
 	public void Prueba5() {
 		driver.get("http://localhost:8090/?lang=ES");
 	    driver.findElement(By.id("login")).click();
@@ -318,7 +318,7 @@ public class WallapopTest {
 		
 	}
 	//Inicio de sesión con datos válidos (usuario ).
-	//@Test
+	@Test
 	public void Prueba6() {
 		driver.get("http://localhost:8090/?lang=ES");
 	    driver.findElement(By.id("login")).click();
@@ -335,7 +335,7 @@ public class WallapopTest {
 	    testUtil.searchText("Desconectar", false);
 	}
 	//Inicio de sesión con datos inválidos (usuario estándar, campo email y contraseña vacíos).
-	//@Test
+	@Test
 	public void Prueba7() {
 		driver.get("http://localhost:8090/?lang=ES");
 	    driver.findElement(By.id("login")).click();
@@ -353,7 +353,7 @@ public class WallapopTest {
 			
 		}
 	//Inicio de sesión con datos válidos (usuario estándar, email existente, pero contraseñ incorrecta).
-	//@Test
+	@Test
 	public void Prueba8() {
 		driver.get("http://localhost:8090/?lang=ES");
 	    driver.findElement(By.id("login")).click();
@@ -372,7 +372,7 @@ public class WallapopTest {
 				
 		}	
 	//Inicio de sesión con datos inválidos (usuario estándar, email no existente en la aplicación).
-	//@Test
+	@Test
 	public void Prueba9()
 	{
 		driver.get("http://localhost:8090/?lang=ES");
@@ -391,7 +391,7 @@ public class WallapopTest {
 	}
 	
 	//Hacer click en la opción de salir de sesión y comprobar que se redirige a la página de inicio de sesión (Login).
-	//@Test
+	@Test
 	public void Prueba10()
 	{
 		driver.get("http://localhost:8090/?lang=ES");
@@ -409,7 +409,7 @@ public class WallapopTest {
 	    
 	}
 	//Comprobar que el botón cerrar sesión no está visible si el usuario no está autenticado.
-	//@Test
+	@Test
 	public void Prueba11()
 	{
 		 testUtil.searchText("ID", false);
@@ -417,7 +417,7 @@ public class WallapopTest {
 	}
 	//Mostrar el listado de usuarios y comprobar que se muestran todos los que existen en el 
 
-	//@Test
+	@Test
 	public void Prueba12()
 	{
 		driver.get("http://localhost:8090/?lang=ES");
@@ -509,7 +509,7 @@ public class WallapopTest {
 	}
 	//Ir al formulario de alta de oferta, rellenarla con datos válidos y pulsar el botón Submit.
 	//Comprobar que la oferta sale en el listado de ofertas de dicho usuario
-	//@Test
+	@Test
 	public void Prueba16()
 	{
 		driver.get("http://localhost:8090/?lang=ES");
@@ -541,7 +541,7 @@ public class WallapopTest {
 	    testUtil.searchText("Agregar", false);
 	}
 	//Ir al formulario de alta de oferta, rellenarla con datos inválidos (campo título vacío) y pulsarel botón Submit. Comprobar que se muestra el mensaje de campo obligatorio.
-	//@Test
+	@Test
 	public void Prueba17()
 	{
 		driver.get("http://localhost:8090/?lang=ES");
@@ -616,7 +616,7 @@ public class WallapopTest {
 		
 	}
 	//Hacer una búsqueda con el campo vacío y comprobar que se muestra la página que corresponde con el listado de las ofertas existentes en el sistema
-	//@Test
+	@Test
 	public void Prueba21()
 	{
 		driver.get("http://localhost:8090/?lang=ES");
@@ -632,8 +632,8 @@ public class WallapopTest {
 	    driver.findElement(By.id("offermanage")).click();
 	    driver.findElement(By.id("offersearch")).click();
 	    
-	    testUtil.searchText("taza", true);
-	    testUtil.searchText("teclado", true);
+	    testUtil.searchText("Offer 1", true);
+	    testUtil.searchText("Offer 2", true);
 	}
 	//Hacer una búsqueda escribiendo en el campo un texto que no exista y comprobar que se
 	//muestra la página que corresponde, con la lista de ofertas vacía.
@@ -686,31 +686,35 @@ public class WallapopTest {
 		
 	}
 	
-	//@Test
+	@Test
 	//Visualizar al menos cuatro páginas en Español/Inglés/Español (comprobando que algunas
 	//de las etiquetas cambian al idioma correspondiente). 
 	public void Prueba27()
 	{
 		driver.get("http://localhost:8090/?lang=ES");
+		
 	    driver.findElement(By.id("login")).click();
+	    testUtil.searchText("Identíficate", true);
+		driver.findElement(By.id("btnLanguage")).click();
+		driver.findElement(By.id("btnEnglish")).click();
+		testUtil.searchText("Identíficate", false);
+		testUtil.searchText("Log", true);
 	    driver.findElement(By.name("username")).click();
 	    driver.findElement(By.name("username")).clear();
 	    driver.findElement(By.name("username")).sendKeys("user1@email.com");
 	    driver.findElement(By.name("password")).click();
 	    driver.findElement(By.name("password")).clear();
 	    driver.findElement(By.name("password")).sendKeys("user1");
-	    testUtil.searchText("Identíficate", true);
-	    driver.findElement(By.id("btnLanguage")).click();
-	    driver.findElement(By.id("btnEnglish")).click();
-	    testUtil.searchText("Identíficate", false);
-	    testUtil.searchText("Log", true);
+	   
 	    
 	    driver.findElement(By.id("send")).click();
+	    
+	    testUtil.searchText("Bienvenidos", false);
 	    testUtil.searchText("Welcome", true);
 	    driver.findElement(By.id("btnLanguage")).click();
 	    driver.findElement(By.id("btnSpanish")).click();
 	    testUtil.searchText("Welcome", false);
-	    testUtil.searchText("Bienvenidos", true);
+	    
 	    
 	    driver.findElement(By.id("offermanage")).click();
 	    driver.findElement(By.id("offersearch")).click();
@@ -731,21 +735,53 @@ public class WallapopTest {
 	    testUtil.searchText("taza", false);
 	    testUtil.searchText("teclado", false);
 	}
-	//@Test
+	//Intentar acceder sin estar autenticado a la opción de listado de usuarios del administrador. Se
+	@Test
 	public void Prueba28()
 	{
-		
+		driver.get("http://localhost:8090/?lang=ES");
+		driver.findElement(By.id("login")).click();
+		driver.findElement(By.name("username")).click();
+	    driver.findElement(By.name("username")).clear();
+	    driver.findElement(By.name("username")).sendKeys("user1@email.com");
+	    driver.findElement(By.name("password")).click();
+	    driver.findElement(By.name("password")).clear();
+	    driver.findElement(By.name("password")).sendKeys("user1");
+	    
+	    driver.findElement(By.id("send")).click();
+	    testUtil.searchText("Usuarios", false);
+	    testUtil.searchText("Ver Usuarios", false);
+	   
 	}
-	//@Test
+	@Test
+	//] Intentar acceder sin estar autenticado a la opción de listado de ofertas propias de un usuario
+	//estándar. Se deberá volver al formulario de login.
 	public void Prueba29()
 	{
-		
+		driver.get("http://localhost:8090/?lang=ES");
+		testUtil.searchText("Ofertas", false);
+	    testUtil.searchText("Ver Usuarios", false);
+	    testUtil.searchText("Identíficate", true);
+	    
 	}
 	
-	//@Test
+	@Test
+	//Estando autenticado como usuario estándar intentar acceder a la opción de listado de
+	//usuarios del administrador. Se deberá indicar un mensaje de acción prohibida.
 	public void Prueba30()
 	{
-		
+		driver.get("http://localhost:8090/?lang=ES");
+		driver.findElement(By.id("login")).click();
+		driver.findElement(By.name("username")).click();
+	    driver.findElement(By.name("username")).clear();
+	    driver.findElement(By.name("username")).sendKeys("user1@email.com");
+	    driver.findElement(By.name("password")).click();
+	    driver.findElement(By.name("password")).clear();
+	    driver.findElement(By.name("password")).sendKeys("user1");
+	    driver.findElement(By.id("send")).click();
+	    driver.get("http://localhost:8090/user/list");
+	    testUtil.searchText("Forbidden", true);
+	    
 	}
 	
 }
