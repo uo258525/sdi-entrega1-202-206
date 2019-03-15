@@ -40,10 +40,10 @@ public class WallapopTest {
 	// automáticas)):
 	final static String PathFirefox64 = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
 	// helen
-	//final static String Geckdriver022 = "C:\\Users\\ediaz\\Downloads\\PL-SDI-Sesión5-material\\PL-SDI-Sesión5-material\\geckodriver024win64.exe";
+	final static String Geckdriver022 = "C:\\Users\\ediaz\\Downloads\\PL-SDI-Sesión5-material\\PL-SDI-Sesión5-material\\geckodriver024win64.exe";
 
 	// astrid
-	static String Geckdriver022 = "C:\\Users\\astri\\Downloads\\PL-SDI-Sesión5-material\\PL-SDI-Sesión5-material\\geckodriver024win64.exe";
+	//static String Geckdriver022 = "C:\\Users\\astri\\Downloads\\PL-SDI-Sesión5-material\\PL-SDI-Sesión5-material\\geckodriver024win64.exe";
 
 	static WebDriver driver = getDriver(PathFirefox64, Geckdriver022);
 	String URL = "http://localhost:8090";
@@ -435,23 +435,77 @@ public class WallapopTest {
 	    testUtil.searchText("user2", true);
 	    testUtil.searchText("user3", true);
 	}
-	//Ir a la lista de usuarios, borrar el primer usuario de la lista, comprobar que la lista se actualizay dicho usuario desaparece.
-	//@Test
+	//Admin.Ir a la lista de usuarios, borrar el primer usuario de la lista, comprobar que la lista se actualizay dicho usuario desaparece.
+	@Test
 	public void Prueba13()
 	{
-		
+		 	driver.get("http://localhost:8090/?lang=ES");
+		    driver.findElement(By.id("login")).click();
+		    driver.findElement(By.name("username")).click();
+		    driver.findElement(By.name("username")).clear();
+		    driver.findElement(By.name("username")).sendKeys("admin@email.com");
+		    driver.findElement(By.name("password")).click();
+		    driver.findElement(By.name("password")).clear();
+		    driver.findElement(By.name("password")).sendKeys("admin");
+		    driver.findElement(By.id("send")).click();
+		    driver.findElement(By.id("usermanage")).click();
+		    driver.findElement(By.id("usersee")).click();
+		    driver.findElement(By.name("idsUser")).click();
+		    driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='García'])[1]/following::input[2]")).click();
+		    testUtil.waitChangeWeb();
+		    testUtil.searchText("Usuarios", true);
+		    testUtil.searchText("user1@email.com", false);
+		    
 	}
-	//@Test
-	//Ir a la lista de usuarios, borrar el último usuario de la lista, comprobar que la lista se actualizay dicho usuario desaparece.
+	
+	//Admin.Ir a la lista de usuarios, borrar el último usuario de la lista, comprobar que la lista se actualizay dicho usuario desaparece.
+	@Test
 	public void Prueba14()
 	{
+			driver.get("http://localhost:8090/?lang=ES");
+		    driver.findElement(By.id("login")).click();
+		    driver.findElement(By.name("username")).click();
+		    driver.findElement(By.name("username")).clear();
+		    driver.findElement(By.name("username")).sendKeys("admin@email.com");
+		    driver.findElement(By.name("password")).click();
+		    driver.findElement(By.name("password")).clear();
+		    driver.findElement(By.name("password")).sendKeys("admin");
+		    driver.findElement(By.id("send")).click();
+		    driver.findElement(By.id("usermanage")).click();
+		    driver.findElement(By.id("usersee")).click();
+		    driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='García'])[1]/following::input[1]")).click();
+		    driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='García'])[1]/following::input[2]")).click();
+		    testUtil.waitChangeWeb();
+		    testUtil.searchText("Usuarios", true);
+		    testUtil.searchText("user3@email.com", false);
 		
 	}
-	//@Test
-	//Ir a la lista de usuarios, borrar 3 usuarios, comprobar que la lista se actualiza y dichosusuarios desaparecen.
+	
+	//Admin.Ir a la lista de usuarios, borrar 3 usuarios, comprobar que la lista se actualiza y dichosusuarios desaparecen.
+	@Test
 	public void Prueba15()
 	{
-		
+		driver.get("http://localhost:8090/?lang=ES");
+	    driver.findElement(By.id("login")).click();
+	    driver.findElement(By.name("username")).click();
+	    driver.findElement(By.name("username")).clear();
+	    driver.findElement(By.name("username")).sendKeys("admin@email.com");
+	    driver.findElement(By.name("password")).click();
+	    driver.findElement(By.name("password")).clear();
+	    driver.findElement(By.name("password")).sendKeys("admin");
+	    driver.findElement(By.id("send")).click();
+	    driver.findElement(By.id("usermanage")).click();
+	    driver.findElement(By.id("usersee")).click();
+	    driver.findElement(By.name("idsUser")).click();
+	    driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Fernandez'])[1]/following::input[1]")).click();
+	    driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='García'])[1]/following::input[1]")).click();
+	    driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='García'])[1]/following::input[2]")).click();
+	    testUtil.waitChangeWeb();
+	    testUtil.searchText("Usuarios", true);
+	    testUtil.searchText("user1@email.com", false);
+	    testUtil.searchText("user2@email.com", false);
+	    testUtil.searchText("user3@email.com", false);
+	    
 	}
 	//Ir al formulario de alta de oferta, rellenarla con datos válidos y pulsar el botón Submit.
 	//Comprobar que la oferta sale en el listado de ofertas de dicho usuario
