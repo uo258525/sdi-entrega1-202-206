@@ -25,7 +25,6 @@ public class Offer {
 	private String description;// description of the object
 	private LocalDateTime date; // date of objet upload
 	private double price;
-	
 
 	@Enumerated(EnumType.STRING)
 	private SaleStatus status; // offer status->possibility for the user to
@@ -42,12 +41,13 @@ public class Offer {
 	public Offer() {
 
 	}
-	public Offer(String title,String description,double price, User owner)
-	{
-		this.title=title;
-		this.description=description;
-		this.price=price;
+
+	public Offer(String title, String description, double price, User owner) {
+		this.title = title;
+		this.description = description;
+		this.price = price;
 		this.owner = owner;
+		this.status = SaleStatus.AVAILABLE;
 	}
 
 	public long getId() {
@@ -139,9 +139,5 @@ public class Offer {
 				+ ", status=" + status + ", owner=" + owner + ", buyer=" + buyer
 				+ ", messages=" + messages + "]";
 	}
-
-	
-
-	
 
 }

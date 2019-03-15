@@ -121,7 +121,7 @@ public class OffersController {
 	public String deleteoffer(@PathVariable Long id) {
 
 		offersService.deleteOffer(id);
-		return "redirect:/offer/list";
+		return "redirect:/offer/selling";
 	}
 
 	@RequestMapping("/offer/list/update")

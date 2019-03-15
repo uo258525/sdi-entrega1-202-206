@@ -12,7 +12,7 @@
 		<div class="collapse navbar-collapse" id="myNavbar">
 			<ul class="nav navbar-nav" sec:authorize="isAuthenticated()">
 				<li><a href="/">Home</a></li>
-				<li id="offers-menu" class="dropdown"><a
+				<li sec:authorize="isAuthenticated()&& hasRole('ROLE_USER')" id="offers-menu" class="dropdown"><a
 					class="dropdown-toggle" data-toggle="dropdown" id="offermanage" href="#"
 					th:text="#{offermanage.message}"> Gestión de Ofertas <span
 						class="caret"></span>
@@ -23,11 +23,11 @@
 							href="/offer/add" id="offeradd" th:text="#{offeradd.message}">Agregar
 								Oferta</a></li>
 						<li><a href="/offer/search" id="offersearch" th:text="#{offersearch.message}"></a></li>
-						<li><a href="/offer/list" id="offersee" th:text="#{offersee.message}">Ver
+						<li sec:authorize="isAuthenticated()&& hasRole('ROLE_USER')"><a href="/offer/list" id="offersee" th:text="#{offersee.message}">Ver
 								Ofertas de otros usuarios</a></li>
-						<li><a href="/offer/selling" id="offerselling"
+						<li sec:authorize="isAuthenticated()&& hasRole('ROLE_USER')"><a href="/offer/selling" id="offerselling"
 							th:text="#{offerseeMine.message}">Ver Ofertas propias</a></li>
-						<li><a href="/offer/bought" id="offerbought"
+						<li sec:authorize="isAuthenticated()&& hasRole('ROLE_USER')"><a href="/offer/bought" id="offerbought"
 							th:text="#{offerseeBought.message}">Ver Ofertas compradas</a></li>
 
 					</ul></li>
@@ -60,11 +60,13 @@
 								th:text="#{language.es}">Español</span>
 						</a></li>
 					</ul>
-				<li sec:authorize="!isAuthenticated()"><a href="/signup" id="signup"
+				<li sec:authorize="!isAuthenticated()">
+				<a href="/signup" id="signup"
 					th:text="#{signup.message}"> <span
 						class="glyphicon glyphicon-user"></span> Registrate
 				</a></li>
-				<li sec:authorize="!isAuthenticated()"><a href="/login" id="login"
+				<li sec:authorize="!isAuthenticated()">
+				<a href="/login" id="login"
 					th:text="#{login.message}"> <span
 						class="glyphicon glyphicon-log-in"></span> Identifícate
 				</a></li>

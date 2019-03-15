@@ -1,6 +1,8 @@
 package com.uniovi.services;
 
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
 
 import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,6 +76,10 @@ public class OffersService {
 			userRepository.save(user);
 		}
 		return result;
+	}
+
+	public void saveAll(List<Offer> offers) {
+		offersRepository.saveAll(offers);
 	}
 
 }
