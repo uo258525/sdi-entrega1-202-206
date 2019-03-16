@@ -1,7 +1,9 @@
 package com.uniovi.tests;
 
-import java.util.HashSet;
-import java.util.Set;
+import static org.junit.Assert.assertTrue;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -14,6 +16,7 @@ import org.junit.runners.MethodSorters;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -25,7 +28,7 @@ import com.uniovi.entities.type.Rol;
 import com.uniovi.repositories.MessageRepository;
 import com.uniovi.repositories.OfferRepository;
 import com.uniovi.repositories.UserRepository;
-import com.uniovi.services.RolesService;
+import com.uniovi.services.OffersService;
 import com.uniovi.services.UserService;
 import com.uniovi.tests.utils.TestUtil;
 
@@ -50,12 +53,12 @@ public class WallapopTest {
 	String URL = "http://localhost:8090";
 
 	@Autowired
-	private UserService usersService;
+	private OffersService offerService;
 	@Autowired
-	private RolesService rolesService;
+	private UserService userService;
 
 	@Autowired
-	private UserRepository usersRepository;
+	private UserRepository userRepository;
 
 	@Autowired
 	private OfferRepository offerRepository;
@@ -96,11 +99,9 @@ public class WallapopTest {
 	}
 
 	public void initdb() {
-
-		// Borramos todas las entidades.
 		messageRepository.deleteAll();
 		offerRepository.deleteAll();
-		usersRepository.deleteAll();
+		userRepository.deleteAll();
 
 		// Ahora las volvemos a crear
 		User user = new User();
@@ -155,41 +156,39 @@ public class WallapopTest {
 		user5.setSurname("Fivement");
 		user5.setActive(true);
 
-		Set<Offer> user1Offers = new HashSet<Offer>();
+		userService.addUser(user);
+		userService.addUser(user1);
+		userService.addUser(user2);
+		userService.addUser(user3);
+		userService.addUser(user4);
+		userService.addUser(user5);
+
+		List<Offer> user1Offers = new ArrayList<Offer>();
+		for (int i = 1; i < 4; i++)
+			user1Offers.add(new Offer("Offer 1", "seminuevo", i * 1.0, user1));
+
+		offerService.saveAll(user1Offers);
+
+		List<Offer> user2Offers = new ArrayList<Offer>();
+		for (int i = 1; i < 4; i++)
+			user2Offers.add(new Offer("Offer 2", "muy bueno", i * 1.0, user2));
+		offerService.saveAll(user2Offers);
+
+		List<Offer> user3Offers = new ArrayList<Offer>();
+		for (int i = 1; i < 6; i++)
+			user3Offers.add(new Offer("Offer 3", "seminuevo", i * 1.0, user3));
+		offerService.saveAll(user1Offers);
+
+		List<Offer> user4Offers = new ArrayList<Offer>();
 		for (int i = 1; i < 5; i++)
-			user1Offers.add(new Offer("Offer 1", "bueno borito barato", i * 1.0,
-					user1));
-		user1.setAnnouncedOffers(user1Offers);
+			user4Offers.add(
+					new Offer("Offer 4", "muy buena calidad", i * 1.0, user4));
+		offerService.saveAll(user4Offers);
 
-		Set<Offer> user2Offers = new HashSet<Offer>();
-		for (int i = 1; i < 5; i++)
-			user2Offers.add(new Offer("Offer 2", "bueno borito barato", i * 1.0,
-					user2));
-		user2.setAnnouncedOffers(user2Offers);
-		Set<Offer> user3Offers = new HashSet<Offer>();
-		for (int i = 1; i < 8; i++)
-			user3Offers.add(new Offer("Offer 3", "bueno borito barato", i * 1.0,
-					user3));
-		user3.setAnnouncedOffers(user3Offers);
-		Set<Offer> user4Offers = new HashSet<Offer>();
-		for (int i = 1; i < 15; i++)
-			user4Offers.add(new Offer("Offer 4", "bueno borito barato", i * 1.0,
-					user4));
-
-		user4.setAnnouncedOffers(user4Offers);
-
-		Set<Offer> user5Offers = new HashSet<Offer>();
-		for (int i = 1; i < 15; i++)
-			user5Offers.add(new Offer("Offer 5", "bueno borito barato", i * 1.0,
-					user5));
-		user5.setAnnouncedOffers(user4Offers);
-
-		usersService.addUser(user);
-		usersService.addUser(user1);
-		usersService.addUser(user2);
-		usersService.addUser(user3);
-		usersService.addUser(user4);
-		usersService.addUser(user5);
+		List<Offer> user5Offers = new ArrayList<Offer>();
+		for (int i = 1; i < 4; i++)
+			user5Offers.add(new Offer("Offer 5", "excelente", i * 1.0, user5));
+		offerService.saveAll(user5Offers);
 
 	}
 
@@ -201,8 +200,8 @@ public class WallapopTest {
 	}
 
 	// Prueba1. Registro de Usuario con datos válidos /
-	// @Test
-	public void Prueba1() {
+	@Test
+	public void Prueba01() {
 		initdb();
 		driver.get("http://localhost:8090/?lang=ES");
 		driver.findElement(By.linkText("Registrate")).click();
@@ -230,8 +229,8 @@ public class WallapopTest {
 
 	// Registro de Usuario con datos inválidos (email vacío, nombre vacío,
 	// apellidos vacíos)
-	// @Test
-	public void Prueba2() {
+	@Test
+	public void Prueba02() {
 		driver.get("http://localhost:8090/signup?lang=ES");
 		driver.findElement(By.name("password")).click();
 		driver.findElement(By.name("password")).clear();
@@ -247,8 +246,8 @@ public class WallapopTest {
 
 	// Registro de Usuario con datos inválidos (repetición de contraseña
 	// inválida)
-	// @Test
-	public void Prueba3() {
+	@Test
+	public void Prueba03() {
 		driver.get("http://localhost:8090/?lang=ES");
 		driver.findElement(By.id("signup")).click();
 		driver.findElement(By.name("email")).click();
@@ -274,7 +273,7 @@ public class WallapopTest {
 
 	// Registro de Usuario con datos inválidos (email existente).
 	@Test
-	public void Prueba4() {
+	public void Prueba04() {
 		driver.get("http://localhost:8090/?lang=ES");
 		driver.findElement(By.id("signup")).click();
 		driver.findElement(By.name("email")).click();
@@ -302,7 +301,7 @@ public class WallapopTest {
 
 	// Inicio de sesión con datos válidos (administrador).
 	@Test
-	public void Prueba5() {
+	public void Prueba05() {
 		driver.get("http://localhost:8090/?lang=ES");
 		driver.findElement(By.id("login")).click();
 		driver.findElement(By.name("username")).click();
@@ -321,7 +320,7 @@ public class WallapopTest {
 
 	// Inicio de sesión con datos válidos (usuario ).
 	@Test
-	public void Prueba6() {
+	public void Prueba06() {
 		driver.get("http://localhost:8090/?lang=ES");
 		driver.findElement(By.id("login")).click();
 		driver.findElement(By.name("username")).click();
@@ -340,7 +339,7 @@ public class WallapopTest {
 	// Inicio de sesión con datos inválidos (usuario estándar, campo email y
 	// contraseña vacíos).
 	@Test
-	public void Prueba7() {
+	public void Prueba07() {
 		driver.get("http://localhost:8090/?lang=ES");
 		driver.findElement(By.id("login")).click();
 		driver.findElement(By.name("username")).click();
@@ -360,7 +359,7 @@ public class WallapopTest {
 	// Inicio de sesión con datos válidos (usuario estándar, email existente,
 	// pero contraseñ incorrecta).
 	@Test
-	public void Prueba8() {
+	public void Prueba08() {
 		driver.get("http://localhost:8090/?lang=ES");
 		driver.findElement(By.id("login")).click();
 		driver.findElement(By.name("username")).click();
@@ -380,7 +379,7 @@ public class WallapopTest {
 	// Inicio de sesión con datos inválidos (usuario estándar, email no
 	// existente en la aplicación).
 	@Test
-	public void Prueba9() {
+	public void Prueba09() {
 		driver.get("http://localhost:8090/?lang=ES");
 		driver.findElement(By.id("login")).click();
 		driver.findElement(By.name("username")).click();
@@ -460,9 +459,10 @@ public class WallapopTest {
 		driver.findElement(By.id("usermanage")).click();
 		driver.findElement(By.id("usersee")).click();
 		testUtil.waitChangeWeb();
+		driver.findElement(By.id("usermanage")).click();
+		driver.findElement(By.id("usersee")).click();
 		driver.findElements(By.className("check")).get(0).click();
-		//TODO 
-		//Pulsar boton eliminar
+		driver.findElement(By.id("DeleteButton")).click();
 		testUtil.searchText("Usuarios", true);
 		testUtil.searchText("user1@email.com", false);
 
@@ -483,12 +483,9 @@ public class WallapopTest {
 		driver.findElement(By.id("send")).click();
 		driver.findElement(By.id("usermanage")).click();
 		driver.findElement(By.id("usersee")).click();
-		driver.findElement(By.xpath(
-				"(.//*[normalize-space(text()) and normalize-space(.)='Fivement'])[1]/following::input[1]"))
-				.click();
-		driver.findElement(By.xpath(
-				"(.//*[normalize-space(text()) and normalize-space(.)='Fivement'])[1]/following::input[2]"))
-				.click();
+		List<WebElement> usuarios = driver.findElements(By.className("check"));
+		usuarios.get(usuarios.size() - 1).click();
+		driver.findElement(By.id("DeleteButton")).click();
 		testUtil.waitChangeWeb();
 		testUtil.searchText("Usuarios", true);
 		testUtil.searchText("user5@email.com", false);
@@ -510,16 +507,10 @@ public class WallapopTest {
 		driver.findElement(By.id("send")).click();
 		driver.findElement(By.id("usermanage")).click();
 		driver.findElement(By.id("usersee")).click();
-		driver.findElement(By.name("idsUser")).click();
-		driver.findElement(By.xpath(
-				"(.//*[normalize-space(text()) and normalize-space(.)='Fernandez'])[1]/following::input[1]"))
-				.click();
-		driver.findElement(By.xpath(
-				"(.//*[normalize-space(text()) and normalize-space(.)='García'])[1]/following::input[1]"))
-				.click();
-		driver.findElement(By.xpath(
-				"(.//*[normalize-space(text()) and normalize-space(.)='García'])[1]/following::input[2]"))
-				.click();
+		driver.findElements(By.className("check")).get(0).click();
+		driver.findElements(By.className("check")).get(1).click();
+		driver.findElements(By.className("check")).get(2).click();
+		driver.findElement(By.id("DeleteButton")).click();
 		testUtil.waitChangeWeb();
 		testUtil.searchText("Usuarios", true);
 		testUtil.searchText("user1@email.com", false);
@@ -595,9 +586,7 @@ public class WallapopTest {
 
 	}
 
-	 @Test
-	 //Mostrar el listado de ofertas para dicho usuario y comprobar que se muestran todas los que
-	 //existen para este usuario
+	@Test
 	public void Prueba18() {
 		// login user
 		driver.get("http://localhost:8090/?lang=ES");
@@ -634,14 +623,54 @@ public class WallapopTest {
 	// que la lista se actualiza y que la oferta desaparece.
 	@Test
 	public void Prueba19() {
+		driver.get("http://localhost:8090/?lang=ES");
+		driver.findElement(By.id("login")).click();
+		driver.findElement(By.name("username")).click();
+		driver.findElement(By.name("username")).clear();
+		driver.findElement(By.name("username")).sendKeys("user2@email.com");
+		driver.findElement(By.name("password")).click();
+		driver.findElement(By.name("password")).clear();
+		driver.findElement(By.name("password")).sendKeys("user2");
+		driver.findElement(By.id("send")).click();
+		testUtil.waitChangeWeb();
+		driver.findElement(By.id("offermanage")).click();
+		driver.findElement(By.id("offerselling")).click();
+		testUtil.waitChangeWeb();
+		List<WebElement> elements = driver
+				.findElements(By.className("eliminar"));
+		int size = elements.size();
+		driver.findElements(By.className("eliminar")).get(0).click();
+		testUtil.waitChangeWeb();
+		testUtil.searchText("Ofertas", true);
+		elements = driver.findElements(By.className("eliminar"));
+		assertTrue(size == elements.size() + 1);
 
 	}
 
 	// User.Dar de baja una oferta
 	// Ir a la lista de ofertas, borrar la última oferta de la lista, comprobar
-	// que la lista se actualiza yque la oferta desaparece.
+	// que la lista se actualiza y que la oferta desaparece.
 	@Test
 	public void Prueba20() {
+		driver.get("http://localhost:8090/?lang=ES");
+		driver.findElement(By.id("login")).click();
+		driver.findElement(By.name("username")).click();
+		driver.findElement(By.name("username")).clear();
+		driver.findElement(By.name("username")).sendKeys("user2@email.com");
+		driver.findElement(By.name("password")).click();
+		driver.findElement(By.name("password")).clear();
+		driver.findElement(By.name("password")).sendKeys("user2");
+		driver.findElement(By.id("send")).click();
+		driver.findElement(By.id("offermanage")).click();
+		driver.findElement(By.id("offerselling")).click();
+		List<WebElement> elements = driver
+				.findElements(By.className("eliminar"));
+		int size = elements.size();
+		driver.findElements(By.className("eliminar")).get(size - 1).click();
+		testUtil.waitChangeWeb();
+		testUtil.searchText("Ofertas", true);
+		elements = driver.findElements(By.className("eliminar"));
+		assertTrue(size == elements.size() + 1);
 
 	}
 
@@ -697,36 +726,22 @@ public class WallapopTest {
 		testUtil.searchText("Oferta 5", false);
 	}
 
-	@Test
-	//Sobre una búsqueda determinada (a elección de desarrollador), comprar una oferta que deja
-	//un saldo positivo en el contador del comprobador. Y comprobar que el contador se actualiza
-	//correctamente en la vista del comprador
+	// @Test
 	public void Prueba23() {
-		
-		
-		testUtil.searchText("correctamente", true);
-		
 
 	}
 
-	@Test
-	//Sobre una búsqueda determinada (a elección de desarrollador), comprar una oferta que deja
-	//un saldo 0 en el contador del comprobador. Y comprobar que el contador se actualiza correctamente en
-	//la vista del comprador. 
+	// @Test
 	public void Prueba24() {
 
 	}
 
-	 @Test
-	 //Sobre una búsqueda determinada (a elección de desarrollador), intentar comprar una oferta
-	// que esté por encima de saldo disponible del comprador. Y comprobar que se muestra el mensaje de
-	// saldo no suficiente.
+	// @Test
 	public void Prueba25() {
 
 	}
-//Ir a la opción de ofertas compradas del usuario y mostrar la lista. Comprobar que aparecen
-	// las ofertas que deben aparecer.
-	@Test
+
+	// @Test
 	public void Prueba26() {
 		driver.get("http://localhost:8090/?lang=ES");
 		driver.findElement(By.id("login")).click();

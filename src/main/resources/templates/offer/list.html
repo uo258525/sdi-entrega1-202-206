@@ -49,7 +49,7 @@
 						<td th:text="${offer.price}">10</td>						
 						<td th:text="${offer.owner.email}"></td>
 						<td><a th:href="${'/offer/details/' + offer.id}">detalles</a></td>
-						<td><a th:href="${'/offer/details/' + offer.id}">comprar</a></td>
+						<td><a th:href="${'/offer/details/' + offer.id}" class="comprar">comprar</a></td>
 					</tr>
 				</tbody>
 			</table>

@@ -1,10 +1,9 @@
 package com.uniovi.controllers;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -51,6 +50,7 @@ public class UsersController {
 			user.setRol(Rol.ROLE_USER);
 			usersService.addUser(user);
 			securityService.autoLogin(user.getEmail(), user.getPassword2());
+			model.addAttribute("moneyAccount", user.getMoneyAccount());
 			return "redirect:home";
 		}
 		return "redirect:signup?error";
@@ -62,17 +62,16 @@ public class UsersController {
 	}
 
 	@RequestMapping(value = { "/home" }, method = RequestMethod.GET)
-	public String home(Model model) {
-		Authentication auth = SecurityContextHolder.getContext()
-				.getAuthentication();
-		String email = auth.getName();
-		User activeUser = usersService.getUserByEmail(email);
-
+	public String home(Model model, Principal principal) {
+		User user = usersService.getUserByEmail(principal.getName());
+		model.addAttribute("moneyAccount", user.getMoneyAccount());
 		return "home";
 	}
 
 	@GetMapping("/user/list")
-	public String getList(Model model) {
+	public String getList(Model model, Principal principal) {
+		User user = usersService.getUserByEmail(principal.getName());
+		model.addAttribute("moneyAccount", user.getMoneyAccount());
 		model.addAttribute("usersList", usersService.getUsersStandardActive());
 		return "users/list";
 	}

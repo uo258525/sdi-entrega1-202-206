@@ -11,9 +11,15 @@ import com.uniovi.entities.type.SaleStatus;
 
 
 public interface OfferRepository extends JpaRepository<Offer, Long> {
+	
+	@Query("SELECT o FROM Offer o WHERE o.id = ?1")
+	Offer findSpecificOffer(Long id);
 
-	@Query("SELECT r FROM Offer r WHERE r.owner = ?1 ORDER BY r.id ASC ")
-	Page<Offer> findAllByUser(Pageable pageable, User user);
+	@Query("SELECT r FROM Offer r "
+			+ "WHERE r.owner = ?1 "
+			+ "AND r.status != ?2 "
+			+ "ORDER BY r.id ASC ")
+	Page<Offer> findAllByUser(Pageable pageable, User user, SaleStatus saleStatus);
 
 	@Query("SELECT r FROM Offer r WHERE (LOWER(r.title) "
 			+ "LIKE LOWER(?1) OR LOWER(r.owner.name) LIKE LOWER(?1))")
@@ -26,7 +32,6 @@ public interface OfferRepository extends JpaRepository<Offer, Long> {
 			String seachtext, User user);
 
 	Page<Offer> findAll(Pageable pageable);
-	
 	
 	//other users offers
 	@Query("SELECT s FROM Offer s WHERE (s.status ='AVAILABLE'OR "
