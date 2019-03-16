@@ -2,7 +2,6 @@ package com.uniovi.services;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +35,7 @@ public class OffersService {
 	}
 
 	public Page<Offer> getOffersOwn(Pageable pageable, User user) {
-		return offersRepository.findAllByUser(pageable, user);
+		return offersRepository.findAllByUser(pageable, user, SaleStatus.NOTAVAILABLE);
 	}
 
 	public Page<Offer> getOffersBought(Pageable pageable, User user) {
@@ -55,9 +54,9 @@ public class OffersService {
 	}
 
 	public void deleteOffer(Long id) {
-		// offersRepository.deleteById(id);
-		Offer offer = getOffer(id);
+		Offer offer = offersRepository.findSpecificOffer(id);
 		offer.setStatus(SaleStatus.NOTAVAILABLE);
+		offersRepository.save(offer);
 	}
 
 	public Page<Offer> searchOffersByDescriptionAndName(Pageable pageable,

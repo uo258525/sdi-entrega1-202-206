@@ -1,9 +1,7 @@
 package com.uniovi.services;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.annotation.PostConstruct;
 
@@ -13,7 +11,6 @@ import org.springframework.stereotype.Service;
 import com.uniovi.entities.Offer;
 import com.uniovi.entities.User;
 import com.uniovi.entities.type.Rol;
-import com.uniovi.repositories.OfferRepository;
 
 @Service
 public class InsertData {
