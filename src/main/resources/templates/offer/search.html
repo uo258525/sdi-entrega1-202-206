@@ -42,9 +42,9 @@
 						<td th:text="${offer.id}">1</td>
 						<td th:text="${offer.title}">Funda de movil</td>
 						<td th:text="${offer.price}">10</td>
-						<td><a id="buy" th:href="${'/offer/details/' + offer.id}">detales</a></td>
-						<td><a class="buy" name="offerbuy" th:href="${'/offer/details/' + offer.id}">comprar</a></td>						
-						<td><a th:href="${'/offer/delete/' + offer.id}">eliminar</a></td>
+						<td><a id="buy" th:href="${'/offer/details/' + offer.id}" th:text="#{details.message}">detales</a></td>
+						<td><a class="buy" name="offerbuy" th:text="#{buy.message}" th:href="${'/offer/details/' + offer.id}">comprar</a></td>						
+						<td><a th:text="#{del.message}" th:href="${'/offer/delete/' + offer.id}">eliminar</a></td>
 					</tr>
 				</tbody>
 			</table>

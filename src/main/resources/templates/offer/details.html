@@ -4,34 +4,34 @@
 <body>
 	<nav th:replace="fragments/nav" />
 	<div class="container">
-		<h2>Detalles de la oferta</h2>
+		<h2 th:text="#{details.message}">Detalles de la oferta</h2>
 		<div class="panel panel-default">
-			<div class="panel-heading">Titulo</div>
+			<div class="panel-heading" th:text="#{offer.title}">Titulo</div>
 			<div class="panel-body" th:text="${offer.title}">vendo un
 				iphone</div>
 		</div>
 		<div class="panel panel-default">
-			<div class="panel-heading">Precio</div>
+			<div class="panel-heading" th:text="#{offer.price}">Precio</div>
 			<div class="panel-body" th:text="${offer.price}">100</div>
 		</div>
 
 		<div class="panel panel-default">
-			<div class="panel-heading">Descripción</div>
+			<div class="panel-heading" th:text="#{offer.description}">Descripción</div>
 			<div class="panel-body" th:text="${offer.description}">vendo un
 				iphone</div>
 		</div>
 
 	</div>
 	<div class="container">
-		<h2>Detalles del Vendedor</h2>
+		<h2 th:text="#{details.message}"></h2>
 		<div class="panel panel-default">
-			<div class="panel-heading">nombre</div>
+			<div class="panel-heading"  th:text="#{owner.message}">nombre</div>
 			<div class="panel-body" th:text="${offer.owner.name}">Juan</div>
 			<div class="panel-heading">email</div>
-			<div class="panel-body" th:text="${offer.owner.email}">aaaa@uniovi.es</div>
+			<div class="panel-body"  th:text="${offer.owner.email}">aaaa@uniovi.es</div>
 		</div>
 		<a th:if="${!owner}" class="btn btn-primary"
-			th:href="${'/offer/list/buy/' + offer.id}"  id="comprarButton">comprar</a>
+			th:text="#{buy.message}" th:href="${'/offer/list/buy/' + offer.id}"  id="comprarButton">comprar</a>
 	</div>
 </body>
 </html>

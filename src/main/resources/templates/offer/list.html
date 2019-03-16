@@ -48,8 +48,8 @@
 						<td th:text="${offer.title}">Funda de movil</td>
 						<td th:text="${offer.price}">10</td>						
 						<td th:text="${offer.owner.email}"></td>
-						<td><a th:href="${'/offer/details/' + offer.id}">detalles</a></td>
-						<td><a th:href="${'/offer/details/' + offer.id}" class="comprar">comprar</a></td>
+						<td><a th:text="#{details.message}" th:href="${'/offer/details/' + offer.id}">detalles</a></td>
+						<td><a th:text="#{buy.message}" th:href="${'/offer/details/' + offer.id}" class="comprar">comprar</a></td>
 					</tr>
 				</tbody>
 			</table>

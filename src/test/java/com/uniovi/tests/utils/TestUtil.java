@@ -21,7 +21,7 @@ public class TestUtil {
 	}
 
 	public void waitChangeWeb() {
-		try {
+		try { 
 			TimeUnit.SECONDS.sleep(TIME);
 		} catch (InterruptedException e) {
 			e.printStackTrace();

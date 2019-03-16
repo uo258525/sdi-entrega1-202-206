@@ -38,9 +38,9 @@
 						<td th:text="${offer.id}">1</td>
 						<td th:text="${offer.title}">Funda de movil</td>
 						<td th:text="${offer.price}">10</td>
-						<td><a th:href="${'/offer/details/' + offer.id}">detalles</a></td>
+						<td><a th:href="${'/offer/details/' + offer.id}" th:text="#{details.message}">detalles</a></td>
 						<td><a th:href="${'/offer/delete/' + offer.id}"
-							class="eliminar">eliminar</a></td>
+							class="eliminar" th:text="#{del.message}">eliminar</a></td>
 					</tr>
 				</tbody>
 			</table>
