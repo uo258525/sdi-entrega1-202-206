@@ -100,7 +100,7 @@ public class InsertData {
 		for (int i = 1; i < 6; i++)
 			user3Offers.add(new Offer("Offer 3", "seminuevo", i * 1.0,
 					user3));
-		offerService.saveAll(user1Offers);
+		offerService.saveAll(user3Offers);
 		
 		List<Offer> user4Offers = new ArrayList<Offer>();
 		for (int i = 1; i < 5; i++)
@@ -109,7 +109,7 @@ public class InsertData {
 		offerService.saveAll(user4Offers);
 
 		List<Offer> user5Offers = new ArrayList<Offer>();
-		for (int i = 1; i < 4; i++)
+		for (int i = 96; i <= 100; i++)
 			user5Offers.add(new Offer("Offer 5", "excelente", i * 1.0,
 					user5));
 		offerService.saveAll(user5Offers);	

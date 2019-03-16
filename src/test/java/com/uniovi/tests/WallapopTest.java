@@ -177,7 +177,7 @@ public class WallapopTest {
 		List<Offer> user3Offers = new ArrayList<Offer>();
 		for (int i = 1; i < 6; i++)
 			user3Offers.add(new Offer("Offer 3", "seminuevo", i * 1.0, user3));
-		offerService.saveAll(user1Offers);
+		offerService.saveAll(user3Offers);
 
 		List<Offer> user4Offers = new ArrayList<Offer>();
 		for (int i = 1; i < 5; i++)
@@ -186,7 +186,7 @@ public class WallapopTest {
 		offerService.saveAll(user4Offers);
 
 		List<Offer> user5Offers = new ArrayList<Offer>();
-		for (int i = 1; i < 4; i++)
+		for (int i = 97; i <= 101; i++)
 			user5Offers.add(new Offer("Offer 5", "excelente", i * 1.0, user5));
 		offerService.saveAll(user5Offers);
 
@@ -585,7 +585,7 @@ public class WallapopTest {
 		testUtil.searchText("Añadir", true);
 
 	}
-
+	//Mostrar el listado de ofertas para dicho usuario y comprobar que se muestran todas los que
 	@Test
 	public void Prueba18() {
 		// login user
@@ -692,8 +692,13 @@ public class WallapopTest {
 		driver.findElement(By.id("offermanage")).click();
 		driver.findElement(By.id("offersearch")).click();
 
-		testUtil.searchText("Offer 1", true);
+		driver.findElement(By.name("searchText")).click();
+		driver.findElement(By.name("searchText")).clear();
+		driver.findElement(By.id("send")).click();
+
 		testUtil.searchText("Offer 2", true);
+		testUtil.searchText("Offer 3", true);
+		
 	}
 
 	// Hacer una búsqueda escribiendo en el campo un texto que no exista y
@@ -717,31 +722,113 @@ public class WallapopTest {
 		driver.findElement(By.name("searchText")).click();
 		driver.findElement(By.name("searchText")).clear();
 		driver.findElement(By.name("searchText")).sendKeys("wowowo");
-		driver.findElement(By.id("submit")).click();
+		driver.findElement(By.id("send")).click();
 
-		testUtil.searchText("Oferta 1", false);
-		testUtil.searchText("Oferta 2", false);
-		testUtil.searchText("Oferta 3", false);
-		testUtil.searchText("Oferta 4", false);
-		testUtil.searchText("Oferta 5", false);
+		testUtil.searchText("Offer 1", false);
+		testUtil.searchText("Offer 2", false);
+		testUtil.searchText("Offer 3", false);
+		testUtil.searchText("Offer 4", false);
+		testUtil.searchText("Offer 5", false);
 	}
 
-	// @Test
+	@Test
+	//Sobre una búsqueda determinada (a elección de desarrollador), comprar una oferta que deja
+	//un saldo positivo en el contador del comprobador. Y comprobar que el contador se actualiza
+	//correctamente en la vista del comprador
 	public void Prueba23() {
+		driver.get("http://localhost:8090/?lang=ES");
+		driver.findElement(By.id("login")).click();
+		driver.findElement(By.name("username")).click();
+		driver.findElement(By.name("username")).clear();
+		driver.findElement(By.name("username")).sendKeys("user1@email.com");
+		driver.findElement(By.name("password")).click();
+		driver.findElement(By.name("password")).clear();
+		driver.findElement(By.name("password")).sendKeys("user1");
+		driver.findElement(By.id("send")).click();
 
+		driver.findElement(By.id("offermanage")).click();
+		driver.findElement(By.id("offersearch")).click();
+
+		driver.findElement(By.name("searchText")).click();
+		driver.findElement(By.name("searchText")).clear();
+		driver.findElement(By.name("searchText")).sendKeys("Offer 2");
+		driver.findElement(By.id("send")).click();
+		List<WebElement> elements = driver
+				.findElements(By.className("buy"));
+		int size = elements.size();
+		driver.findElements(By.className("buy")).get(0).click();
+		driver.findElement(By.className("btn-primary")).click();
+		testUtil.waitChangeWeb();
+		testUtil.searchText("99", true);
+		testUtil.searchText("correctamente", true);
+		
 	}
-
-	// @Test
+	//Sobre una búsqueda determinada (a elección de desarrollador), comprar una oferta que deja
+	//un saldo 0 en el contador del comprobador. Y comprobar que el contador se actualiza correctamente en
+	//la vista del comprador. 
+	@Test
 	public void Prueba24() {
+		driver.get("http://localhost:8090/?lang=ES");
+		driver.findElement(By.id("login")).click();
+		driver.findElement(By.name("username")).click();
+		driver.findElement(By.name("username")).clear();
+		driver.findElement(By.name("username")).sendKeys("user1@email.com");
+		driver.findElement(By.name("password")).click();
+		driver.findElement(By.name("password")).clear();
+		driver.findElement(By.name("password")).sendKeys("user1");
+		driver.findElement(By.id("send")).click();
 
+		driver.findElement(By.id("offermanage")).click();
+		driver.findElement(By.id("offersearch")).click();
+
+		driver.findElement(By.name("searchText")).click();
+		driver.findElement(By.name("searchText")).clear();
+		driver.findElement(By.name("searchText")).sendKeys("Offer 5");
+		driver.findElement(By.id("send")).click();
+		List<WebElement> elements = driver
+				.findElements(By.className("buy"));
+		int size = elements.size();
+		driver.findElements(By.className("buy")).get(3).click();
+		driver.findElement(By.className("btn-primary")).click();
+		testUtil.waitChangeWeb();
+		testUtil.searchText("0", true);
+		testUtil.searchText("comprada", true);
+		
 	}
-
-	// @Test
+	//Sobre una búsqueda determinada (a elección de desarrollador), intentar comprar una oferta
+	//que esté por encima de saldo disponible del comprador. Y comprobar que se muestra el mensaje de
+	//saldo no suficiente.
+	@Test
 	public void Prueba25() {
+		driver.get("http://localhost:8090/?lang=ES");
+		driver.findElement(By.id("login")).click();
+		driver.findElement(By.name("username")).click();
+		driver.findElement(By.name("username")).clear();
+		driver.findElement(By.name("username")).sendKeys("user1@email.com");
+		driver.findElement(By.name("password")).click();
+		driver.findElement(By.name("password")).clear();
+		driver.findElement(By.name("password")).sendKeys("user1");
+		driver.findElement(By.id("send")).click();
 
+		driver.findElement(By.id("offermanage")).click();
+		driver.findElement(By.id("offersearch")).click();
+
+		driver.findElement(By.name("searchText")).click();
+		driver.findElement(By.name("searchText")).clear();
+		driver.findElement(By.name("searchText")).sendKeys("Offer 5");
+		driver.findElement(By.id("send")).click();
+		List<WebElement> elements = driver
+				.findElements(By.className("buy"));
+		int size = elements.size();
+		driver.findElements(By.className("buy")).get(4).click();
+		driver.findElement(By.className("btn-primary")).click();
+		testUtil.waitChangeWeb();
+		testUtil.searchText("100", true);
+		testUtil.searchText("error", true);
 	}
-
-	// @Test
+	//Ir a la opción de ofertas compradas del usuario y mostrar la lista. Comprobar que aparecen
+	//las ofertas que deben aparecer.
+	@Test
 	public void Prueba26() {
 		driver.get("http://localhost:8090/?lang=ES");
 		driver.findElement(By.id("login")).click();
